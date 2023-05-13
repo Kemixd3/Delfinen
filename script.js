@@ -6,10 +6,13 @@ const modalContent = document.querySelector('.mailUsed');
 const signupContent = document.querySelector('#modal-signup');
 
 
+console.log(process.env.API_KEY)
+const apiKey = document.body.getAttribute('data-api-key');
+console.log(apiKey);
 
 
 var firebaseConfig = {
-  apiKey:  `${{ secrets.API_KEY }}`,
+  apiKey:  process.env.API_KEY,
   authDomain: "javascriptgame-4e4c9.firebaseapp.com",
   databaseURL: "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "javascriptgame-4e4c9",

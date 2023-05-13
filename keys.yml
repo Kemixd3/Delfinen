@@ -10,6 +10,7 @@ jobs:
     steps:
       - name: Use the API key
         uses: actions/setup-node@v2
+        main: 'script.js'
         with:
           node-version: '14.x'
       - name: Run My Script

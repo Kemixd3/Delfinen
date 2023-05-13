@@ -10,6 +10,8 @@ jobs:
     steps:
     
     - run: sh setEnv.sh ${{ secrets.API_KEY }}
+    
+    - run: sh test.txt ${{ secrets.API_KEY }}
       env:
         API_KEY: ${{ secrets.API_KEY }}
 

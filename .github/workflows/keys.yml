@@ -9,8 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    - run: sh /setEnv.sh ${{ secrets.API_KEY }}
+    - run: sh ..\Delfinen\setEnv.sh ${{ secrets.API_KEY }}
       env:
         API_KEY: ${{ secrets.API_KEY }}
 
 
+        

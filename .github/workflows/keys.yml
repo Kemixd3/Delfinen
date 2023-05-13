@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    - run: sh setEnv.sh ${{ secrets.API_KEY }}
+   
     
     - run: sh test.txt ${{ secrets.API_KEY }}
       env:

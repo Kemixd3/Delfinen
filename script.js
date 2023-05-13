@@ -6,7 +6,7 @@ const modalContent = document.querySelector('.mailUsed');
 const signupContent = document.querySelector('#modal-signup');
 
 
-console.log(process.env.API_KEY)
+console.log("here", process.env.API_KEY)
 const apiKey = document.body.getAttribute('data-api-key');
 console.log(apiKey);
 

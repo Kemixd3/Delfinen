@@ -1,9 +1,8 @@
 "use strict";
 
 const endpoint = "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app";
-const signupForm2 = document.querySelector('#signup-form');
-const modalContent = document.querySelector('.mailUsed');
-const signupContent = document.querySelector('#modal-signup');
+
+
 
 
 

@@ -7,9 +7,10 @@ const signupContent = document.querySelector('#modal-signup');
 
 
 
-console.log(environment.api_key)
 
 
+const secret = process.env.API_KEY;
+console.log(secret);
 
 
 var firebaseConfig = {

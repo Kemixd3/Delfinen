@@ -8,12 +8,15 @@ jobs:
   use-api-key:
     runs-on: ubuntu-latest
     steps:
-    
-   
-    
-    - run: sh test.txt ${{ secrets.API_KEY }}
-      env:
-        API_KEY: ${{ secrets.API_KEY }}
+      - name: Use the API key
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Run My Script
+        run: node my-script.js 
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+     
 
 
-        
+    

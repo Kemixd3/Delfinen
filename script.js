@@ -7,7 +7,7 @@ const endpoint = "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebas
 
 
 
-
+const NODE_ENV = process.env.NODE_ENV;
 const secret = process.env.API_KEY;
 console.log(secret);
 

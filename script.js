@@ -9,7 +9,7 @@ const signupContent = document.querySelector('#modal-signup');
 
 
 var firebaseConfig = {
-  apiKey: "AIzaSyBuWPU0zqYMOcDZqhBj6lYhJ1Clo8hoFfI",
+  apiKey:  `${{ secrets.API_KEY }}`,
   authDomain: "javascriptgame-4e4c9.firebaseapp.com",
   databaseURL: "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "javascriptgame-4e4c9",

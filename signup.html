@@ -20,8 +20,48 @@
 
   <button onclick="goToMain()">Go back</button>
   <form id="signup-form">
+
     <input type="email" placeholder="Email" id="email" required>
     <input type="password" placeholder="Kode" id="password" minlength="6" required>
+
+
+
+    <div>
+      <label for="name">Navn:</label>
+      <input type="name" id="name" required>
+    </div>
+    <div>
+      <label for="age">Alder:</label>
+      <input type="age" id="age" required>
+    </div>
+  
+
+
+
+    <div>
+      <label for="userType">Vælg din svømmekategori</label>
+     
+      <select id="userType">
+        <option value="exerciser">Motionist</option>
+        <option value="competition">Konkurrencesvømmer</option>
+       
+      </select>
+
+    </div>
+
+
+
+    <div>
+      <label for="subscription">Vælg Abbonement</label>
+     
+      <select id="subscription">
+        <option value="active">Aktiv</option>
+        <option value="passive">Passiv</option>
+       
+      </select>
+
+    </div>
+
     <button type="submit">Sign up</button>
   </form>
   <div id="signup-message"></div>

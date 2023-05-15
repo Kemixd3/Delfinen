@@ -12,6 +12,7 @@ var firebaseConfig = {
   appId: "1:929889109178:web:b4b41c9bf29de88d7c6e83",
   measurementId: "G-P40H8CJHRK"
 };
+
 firebase.initializeApp(firebaseConfig);
 var auth = firebase.auth();
 
@@ -23,7 +24,13 @@ signInButton.addEventListener('click', function (event) {
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(function (userCredential) {
       // User signed in successfully
+
       var user = userCredential.user;
+      var curUserElement = document.getElementById("curUser");
+
+      // Append the variable to the existing string
+      curUserElement.innerHTML = "Bruger: " + user.email + "&nbsp;";
+
       console.log('Signed in as ' + user.email);
     })
     .catch(function (error) {

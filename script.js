@@ -1,6 +1,5 @@
 "use strict";
 
-
 const endpoint = "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app";
 
 var firebaseConfig = {
@@ -13,45 +12,32 @@ var firebaseConfig = {
   appId: "1:929889109178:web:b4b41c9bf29de88d7c6e83",
   measurementId: "G-P40H8CJHRK"
 };
+
 firebase.initializeApp(firebaseConfig);
 var auth = firebase.auth();
 
-
-
-
-
 var signInButton = document.getElementById('sign-in-button');
-signInButton.addEventListener('click', function(event) {
+signInButton.addEventListener('click', function (event) {
   event.preventDefault();
   var email = document.getElementById('email2').value;
   var password = document.getElementById('password2').value;
   firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(function(userCredential) {
+    .then(function (userCredential) {
       // User signed in successfully
+
       var user = userCredential.user;
+      var curUserElement = document.getElementById("curUser");
+
+      // Append the variable to the existing string
+      curUserElement.innerHTML = "Bruger: " + user.email + "&nbsp;";
+
       console.log('Signed in as ' + user.email);
     })
-    .catch(function(error) {
+    .catch(function (error) {
       // Handle sign-in error
       console.error(error);
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function goToSignup() {
   window.location.href = "signup.html";
@@ -59,7 +45,6 @@ function goToSignup() {
 function goToMain() {
   window.location.href = "index.html";
 }
-
 
 var prevScrollpos = window.pageYOffset;
 window.onscroll = function () {
@@ -72,13 +57,8 @@ window.onscroll = function () {
   prevScrollpos = currentScrollPos;
 }
 
-
-
 //Initialize Firebase realtime database
 window.addEventListener("load", init);
-
-
-
 
 //========Function to display the products using FETCH GET request=======
 async function init() {

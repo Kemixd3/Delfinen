@@ -1,187 +1,93 @@
-form {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+header {
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.35);
+  display: flex;
+  height: 13vh;
+  position: sticky;
+  top: 0;
+  background-color: rgb(154, 154, 159);
+  justify-content: center;
+  align-items: center;
 }
 
-form label {
-  display: block;
+header h1 {
+  font-family: Arial, sans-serif;
+  font-size: 2.5vw;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  margin: 0;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+form {
+  max-width: 300px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+form div {
   margin-bottom: 10px;
 }
 
-form input[type="text"] {
-  width: 98%;
-  padding: 10px;
+label {
+  font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"] {
+  padding: 8px;
+  font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 5px;
 }
 
-form button[type="button"] {
-  display: block;
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+button[type="submit"] {
+  background-color: #4285F4;
 }
 
-.product-card {
-  margin: 10px;
-  padding: 10px;
+#signup-message {
   text-align: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
-  border: 2px solid #ccc;
-  align-items: center;
-  border-radius: 5px;
+  margin-top: 20px;
 }
 
-.product-card h2 {
-  margin-top: 0;
-}
+footer {
+  height: 13vh;
 
-.product-card img {
-  max-width: 100%;
-}
-
-#minimize-form:hover {
-  background-color: #075eff;
-  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
-  transform: translateY(-2px);
-}
-
-#minimize-form:active {
-  background-color: #075eff;
-  box-shadow: none;
-  transform: translateY(0px);
-}
-
-.product-card h2 {
-  margin-top: 0;
-
-}
-
-.product-card img {
-  width: 30%;
-  height: auto;
-  object-fit: contain;
-}
-
-.view-more-btn {
-  background-color: indigo;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-top: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.view-more-btn:hover {
-  background-color: green;
-}
-
-.close-dialog-btn {
-  background-color: #ccc;
-  border: none;
-  color: #fff;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-top: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.close-dialog-btn:hover {
-  background-color: #999;
-}
-
-.product-grid {
+  background-color: rgb(154, 154, 159);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  box-shadow: 0px -8px 8px rgba(0, 0, 0, 0.35);
+
 }
 
-#product-cards {
-  grid-template-rows: auto;
-  max-width: 50%;
-  justify-content: center;
-  align-items: center;
+footer h3 {
+  color: #fff;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
 }
-
 
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f7f7f7;
-}
+  background-image: url("images/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
 
-.sort-label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-}
-
-
-
-
-
-.sort-select {
-  display: block;
-  margin: 0 auto;
-  text-align: center;
-}
-
-
-
-.sort-select {
-  display: block;
-  width: 200px;
-  height: 40px;
-  margin-bottom: 20px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  transition: background-color 0.3s ease;
-}
-
-.sort-select:hover {
-  cursor: pointer;
-  background-color: #f2f2f2;
-}
-
-.sort-select:focus {
-  outline: none;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-}
-
-.fade-in {
-  animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }

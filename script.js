@@ -1,19 +1,10 @@
 "use strict";
 
-const endpoint = "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app";
 
-
-
-
-
-
-const NODE_ENV = process.env.NODE_ENV;
-const secret = process.env.API_KEY;
-console.log(secret);
 
 
 var firebaseConfig = {
-  apiKey: " env.API_KEY",
+  apiKey: " AIzaSyBuWPU0zqYMOcDZqhBj6lYhJ1Clo8hoFfI",
   authDomain: "javascriptgame-4e4c9.firebaseapp.com",
   databaseURL: "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "javascriptgame-4e4c9",
@@ -24,6 +15,31 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 var auth = firebase.auth();
+
+
+
+
+
+
+
+var signInButton = document.getElementById('sign-in-button');
+signInButton.addEventListener('click', function(event) {
+  event.preventDefault();
+  var email = document.getElementById('email2').value;
+  var password = document.getElementById('password2').value;
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(function(userCredential) {
+      // User signed in successfully
+      var user = userCredential.user;
+      console.log('Signed in as ' + user.email);
+    })
+    .catch(function(error) {
+      // Handle sign-in error
+      console.error(error);
+    });
+});
+
+
 
 
 
@@ -54,13 +70,6 @@ signupForm.addEventListener('submit', (e) => {
 });
 
 
-
-
-
-
-
-
-
 function goToSignup() {
   window.location.href = "signup.html";
 }
@@ -85,79 +94,6 @@ window.onscroll = function () {
 //Initialize Firebase realtime database
 window.addEventListener("load", init);
 
-
-
-
-
-
-const usersEndpoint = `${endpoint}/users.json`;
-
-signupForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  // get user info
-  const email = signupForm['signup-email'].value;
-  const password = signupForm['signup-password'].value;
-  const bio = signupForm['signup-bio'].value;
-  const niveau = signupForm['signup-option'].value;
-
-  
-  var date = new Date();
-  var options1 = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'Europe/Copenhagen' };
-  var formattedDate = date.toLocaleString('da-DK', options1);
-  // create user object
-  const user = {
-    email: email,
-    password: password,
-    bio: bio,
-    niveau: niveau,
-    dato: formattedDate,
-  }
- 
-  // check if email already exists
-  fetch(usersEndpoint)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      const existingUser = Object.values(data).find(user => user.email === email);
-      if (existingUser) {
-        modalContent.innerHTML = '<h1>Emailen er allerede i brug</h1>';
-        throw new Error('This email is already registered');
-        
-        
-      } else {
-        // send POST request to Firebase Realtime Database
-        return fetch(usersEndpoint, {
-          method: 'POST',
-          body: JSON.stringify(user),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-      }
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      console.log('User created successfully!');
-      const modal = document.querySelector('#modal-signup');
-      goToMain()
-      
-      signupForm.querySelector('.error').innerHTML = ''
-    })
-    .catch(error => {
-      console.error('There was an error creating the user:', error);
-      //signupForm.querySelector('.error').innerHTML = error.message;
-    });
-});
-
-  
-    
 
 
 

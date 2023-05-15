@@ -1,7 +1,7 @@
 "use strict";
 
 
-
+const endpoint = "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app";
 
 var firebaseConfig = {
   apiKey: " AIzaSyBuWPU0zqYMOcDZqhBj6lYhJ1Clo8hoFfI",
@@ -44,30 +44,15 @@ signInButton.addEventListener('click', function(event) {
 
 
 
-// Get a reference to the signup form and signup message
-const signupForm = document.getElementById('signup-form');
-const signupMessage = document.getElementById('signup-message');
 
-// Add a listener to the signup form for when it's submitted
-signupForm.addEventListener('submit', (e) => {
-  e.preventDefault();
 
-  // Get the email and password input values
-  const email = signupForm.email.value;
-  const password = signupForm.password.value;
 
-  // Call Firebase auth to create a new user with the email and password
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // If successful, update the message and clear the form
-      signupMessage.innerHTML = `User created with email: ${userCredential.user.email}`;
-      signupForm.reset();
-    })
-    .catch((error) => {
-      // If unsuccessful, update the message with the error
-      signupMessage.innerHTML = `Error: ${error.message}`;
-    });
-});
+
+
+
+
+
+
 
 
 function goToSignup() {

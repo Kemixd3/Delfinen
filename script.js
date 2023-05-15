@@ -20,8 +20,6 @@ var auth = firebase.auth();
 
 
 
-
-
 var signInButton = document.getElementById('sign-in-button');
 signInButton.addEventListener('click', function(event) {
   event.preventDefault();

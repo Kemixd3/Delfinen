@@ -26,7 +26,11 @@ signupForm.addEventListener('submit', (e) => {
   // Get the email and password input values
   const email = signupForm.email.value;
   const password = signupForm.password.value;
-  
+  const name = signupForm.name.value;
+  const age = signupForm.age.value;
+  const userType = signupForm.userType.value;
+  const subscription = signupForm.subscription.value;
+
   // Call Firebase auth to create a new user with the email and password
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
@@ -35,6 +39,7 @@ signupForm.addEventListener('submit', (e) => {
       
 firebase.auth().onAuthStateChanged(function(user) {
   console.log("HEY")
+ 
   if (user) {
     // User is signed in
     const endpoint = "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app/users.json";
@@ -42,12 +47,28 @@ firebase.auth().onAuthStateChanged(function(user) {
     const uid = user.uid;
     const email = user.email;
     
+
+    var date = new Date();
+    var options1 = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'Europe/Copenhagen' };
+    var formattedDate = date.toLocaleString('da-DK', options1);
+    var stage = "none"
+    if (age >= 18){
+      stage = "senior"
+    } else {
+      stage = "junior"
+    }
+
+
     const userData = {
       uid: uid,
       email: email,
-      name: "",
-      age: "",
-      country: ""
+      oprettet: formattedDate,
+      name: age,
+      age: name,
+      userType: userType,
+      subscription: subscription,
+      stage: stage,
+     
     };
     
     fetch(endpoint, {

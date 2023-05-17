@@ -40,14 +40,20 @@ signInButton.addEventListener('click', function (event) {
         },
         });
         const userData = await response.json();
-        
+        if (userData != null) {
+          const values = Object.values(userData);
+          console.log(values)
+          const objWithName = values.find(obj => obj.hasOwnProperty('name'));
+         
+          const name = objWithName.name;
+          curUserElement.innerHTML = "Brugernavn: " + name + "&nbsp;" +"</br>" + "Mail: " + (user.email || "none");
+
+        } else {
+          curUserElement.innerHTML = "Brugernavn: " + (name || "none") + "&nbsp;" +"</br>" + "Mail: " + (user.email || "none");
+        }
         //const data = JSON.parse(userData);
-        const values = Object.values(userData);
-        console.log(values)
-        const objWithName = values.find(obj => obj.hasOwnProperty('name'));
-       
-        const name = objWithName.name;
-        curUserElement.innerHTML = "Brugernavn: " + name + "&nbsp;" +"</br>" + "Mail: " + user.email;
+      
+        
     })
     .catch(function (error) {
       // Handle sign-in error

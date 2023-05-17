@@ -22,16 +22,32 @@ signInButton.addEventListener('click', function (event) {
   var email = document.getElementById('email2').value;
   var password = document.getElementById('password2').value;
   firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(function (userCredential) {
+    .then(async function (userCredential) {
       // User signed in successfully
-
       var user = userCredential.user;
+      const uid = user.uid;
       var curUserElement = document.getElementById("curUser");
 
       // Append the variable to the existing string
-      curUserElement.innerHTML = "Bruger: " + user.email + "&nbsp;";
-
+      //curUserElement.innerHTML = "Bruger: " + user.email + "&nbsp;";
+      
       console.log('Signed in as ' + user.email);
+      const response = await fetch(`${endpoint}/users/${uid}.json`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        });
+        const userData = await response.json();
+        
+        //const data = JSON.parse(userData);
+        const values = Object.values(userData);
+        console.log(values)
+        const objWithName = values.find(obj => obj.hasOwnProperty('name'));
+       
+        const name = objWithName.name;
+        curUserElement.innerHTML = "Brugernavn: " + name + "&nbsp;" +"</br>" + "Mail: " + user.email;
     })
     .catch(function (error) {
       // Handle sign-in error

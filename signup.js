@@ -42,7 +42,7 @@ firebase.auth().onAuthStateChanged(function(user) {
  
   if (user) {
     // User is signed in
-    const endpoint = "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+    const endpoint = "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app/users";
     const user = firebase.auth().currentUser;
     const uid = user.uid;
     const email = user.email;
@@ -57,8 +57,6 @@ firebase.auth().onAuthStateChanged(function(user) {
     } else {
       stage = "junior"
     }
-
-
     const userData = {
       uid: uid,
       email: email,
@@ -67,20 +65,24 @@ firebase.auth().onAuthStateChanged(function(user) {
       age: name,
       userType: userType,
       subscription: subscription,
-      stage: stage,
-     
+      stage: stage
     };
     
-    fetch(endpoint, {
+    
+    fetch(`${endpoint}/${uid}.json`, {
       method: 'POST',
       body: JSON.stringify(userData)
     })
-    .then(response => {
-      console.log('Profile created successfully:', response);
-    })
-    .catch(error => {
-      console.error('Error creating profile:', error);
-    });
+      .then((response) => {
+        if (response.ok) {
+          console.log('User with custom ID created successfully');
+        } else {
+          throw new Error('Failed to create user with custom ID');
+        }
+      })
+      .catch((error) => {
+        console.error('Error creating user with custom ID:', error);
+      });
     
   }
 });

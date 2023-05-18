@@ -30,7 +30,7 @@ signInButton.addEventListener('click', function (event) {
 
       // Append the variable to the existing string
       //curUserElement.innerHTML = "Bruger: " + user.email + "&nbsp;";
-      
+
       console.log('Signed in as ' + user.email);
       const response = await fetch(`${endpoint}/users/${uid}.json`, {
         method: 'GET',
@@ -38,22 +38,22 @@ signInButton.addEventListener('click', function (event) {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        });
-        const userData = await response.json();
-        if (userData != null) {
-          const values = Object.values(userData);
-          console.log(values)
-          const objWithName = values.find(obj => obj.hasOwnProperty('name'));
-         
-          const name = objWithName.name;
-          curUserElement.innerHTML = "Brugernavn: " + name + "&nbsp;" +"</br>" + "Mail: " + (user.email || "none");
+      });
+      const userData = await response.json();
+      if (userData != null) {
+        const values = Object.values(userData);
+        console.log(values)
+        const objWithName = values.find(obj => obj.hasOwnProperty('name'));
 
-        } else {
-          curUserElement.innerHTML = "Brugernavn: " + (name || "none") + "&nbsp;" +"</br>" + "Mail: " + (user.email || "none");
-        }
-        //const data = JSON.parse(userData);
-      
-        
+        const name = objWithName.name;
+        curUserElement.innerHTML = "Brugernavn: " + name + "&nbsp;" + "</br>" + "Mail: " + (user.email || "none");
+
+      } else {
+        curUserElement.innerHTML = "Brugernavn: " + (name || "none") + "&nbsp;" + "</br>" + "Mail: " + (user.email || "none");
+      }
+      //const data = JSON.parse(userData);
+
+
     })
     .catch(function (error) {
       // Handle sign-in error

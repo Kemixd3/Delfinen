@@ -144,6 +144,7 @@ body {
 
 }
 
+
 .profileButton{
   background-color: transparent;
   position: absolute;
@@ -152,4 +153,27 @@ body {
   background-repeat: no-repeat;
   left: 50%;
   background: url("images/profile.png");
+
+}
+
+
+.birthdate-input {
+  position: relative;
+}
+
+.birthdate-input input[type="date"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.birthdate-input::after {
+  content: '\25BE'; /* Down arrow Unicode character */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #555;
+  pointer-events: none;
+
 }

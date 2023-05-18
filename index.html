@@ -9,36 +9,48 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 
-<header id="myHeader"
 
-  >
+<body>
   <video autoplay muted loop id="myVideo">
     <source src="assets/pixabay-swim.mp4" type="video/mp4">
   </video>
-  <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
-    
-    <h1> Delfinen svømmeklub </h1>
+
+  <div style="align-items: center;  justify-content: center;     display: flex;   ">
+    <h1 class="ocean-heading"> Delfinen Svømmeklub </h1>
   </div>
-
   <h1 style="font-size: 1.5vw;" id="curUser"></h1>
-</header>
-
-<body>
-  <button onclick="goToSignup()">Go to Signup Page</button>
+  
   <form>
     <input type="text" id="email2" placeholder="Email">
     <input type="password" id="password2" placeholder="Kode">
     <button type="submit" id="sign-in-button">Sign In</button>
   </form>
-  <div class="imageDiv">
-    <img src="images/logo.png" alt="Logo" style="max-width: 100%; max-height: 100%;">
+  <div style="align-items: center;  justify-content: center;     display: flex;   ">
+    <button onclick="goToSignup()">Go to Signup Page</button>
   </div>
 
-  <!-- product Cards -->
+  <div class="imageDiv">
+    <img src="images/logo.png" alt="Logo" >
+  </div>
 
-  <footer >
-
-    <h3>Af Nikolai Berthesen og Silas Sandager, DATAv2</h3>
+  <footer>
+    <div class="footer-section">
+      <h3>Af Nikolai Berthesen og Silas Sandager, DATAv2</h3>
+    </div>
+    <div class="footer-section">
+      <h3><b>Ophavsretserklæring for Delfin Svømmeklub:</b><br>
+        Alle rettigheder forbeholdes. <br>
+        Denne ophavsretserklæring gælder for alle elementer, der ejes af Delfin Svømmeklub,<br> herunder men ikke
+        begrænset til logoer, billeder, tekst, design og software.<br> Alle sådanne elementer er beskyttet af ophavsret
+        og andre gældende <br>love om intellektuel ejendomsret.</h3>
+    </div>
+    <div class="footer-section">
+      <h3>
+        Telefon: +45 49 42 06 66<br>
+        Addresse: Guldbergsgade 29N, 2200 København<br>
+        Email: Delfinen@Svømmeklub.dk
+      </h3>
+    </div>
   </footer>
 
   <!-- Initialize Firebase in your app -->

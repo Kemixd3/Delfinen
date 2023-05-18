@@ -10,81 +10,77 @@
 </head>
 
 <body>
-
-
-
-
-  <header id="myHeader"
-
-  >
   <video autoplay muted loop id="myVideo">
     <source src="assets/pixabay-swim.mp4" type="video/mp4">
   </video>
+
+  <div class="imageDiv">
+    <img src="images/logo.png" alt="Logo">
+  </div>
+
   <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
-    
-    <h1> Opret konto hos Delfinen svømmeklub </h1>
+    <h1> Opret konto hos Delfinen Svømmeklub </h1>
   </div>
   <h1 style="font-size: 1.5vw;" id="curUser"></h1>
-</header>
 
 
-
-
-  <button onclick="goToMain()">Go back</button>
-  <form id="signup-form">
-
+  <form>
     <input type="text" placeholder="Email" id="email" required>
     <input type="password" placeholder="Kode" id="password" minlength="6" required>
     <input placeholder="Navn" type="text" id="name" required>
 
-   
+
     <input placeholder="Telefonnummer" type="text" id="phone" required>
-    <br>
-    <label for="userType">Vælg din svømmekategori</label>
-    
+
+
     <select id="userType">
+      <option value="" disabled selected>Vælg din svømmekategori</option>
       <option value="exerciser">Motionist</option>
       <option value="competition">Konkurrencesvømmer</option>
     </select>
-    <br>
-    <label for="gender">Køn</label>
+
     <select id="gender">
+      <option value="" disabled selected>Vælg dit køn</option>
       <option value="male">Mand</option>
       <option value="female">Kvinde</option>
       <option value="other">Anden</option>
     </select>
-
-
-    <label for="birthdate">Alder</label>
-    <div class="birthdate-input">
-      <input type="date" id="birthdate" name="birthdate">
-    </div>
-
-
-
-    <br>
-    <label for="subscription">Vælg Abbonement</label>
+    <input type="date" id="birthdate" name="birthdate">
     <select id="subscription">
+      <option value="" disabled selected>Vælg Abbonement</option>
       <option value="active">Aktiv</option>
-      <option value="passive">Passiv</option><br>
+      <option value="passive">Passiv</option>
     </select>
-
     <button type="submit">Sign up</button>
   </form>
 
 
   <div id="signup-message"></div>
 
-
-  <div class="imageDiv">
-    <img src="images/logo.png" alt="Logo" style="max-width: 100%; max-height: 100%;">
+  <div style="align-items: center;  justify-content: center;     display: flex;   ">
+    <button onclick="goToMain()">Go to Signup Page</button>
   </div>
 
-
-  <!-- product Cards -->
+  <div id="signup-message"></div>
 
   <footer>
-    <h3>Af Nikolai Berthesen og Silas Sandager, DATAv2</h3>
+    <div class="footer-section">
+      <h3>Af Nikolai Berthesen og Silas Sandager, DATAv2</h3>
+    </div>
+    <div class="footer-section">
+      <h3><b>Ophavsretserklæring for Delfin Svømmeklub:</b><br>
+        Alle rettigheder forbeholdes. <br>
+        Denne ophavsretserklæring gælder for alle elementer, der ejes af Delfin Svømmeklub,<br> herunder men ikke
+        begrænset til logoer, billeder, tekst, design og software.<br> Alle sådanne elementer er beskyttet af ophavsret
+        og andre gældende <br>love om intellektuel ejendomsret.</h3>
+    </div>
+    <div class="footer-section">
+      <h3>
+        Telefon: +45 49 42 06 66<br>
+        Addresse: Guldbergsgade 29N, 2200 København<br>
+        Email: Delfinen@Svømmeklub.dk
+      </h3>
+    </div>
   </footer>
 
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>

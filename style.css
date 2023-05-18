@@ -144,3 +144,12 @@ body {
 
 }
 
+.profileButton{
+  background-color: transparent;
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  background-repeat: no-repeat;
+  left: 50%;
+  background: url("images/profile.png");
+}

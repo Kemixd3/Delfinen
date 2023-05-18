@@ -10,64 +10,56 @@
 </head>
 
 <body>
+
+
+
+
   <header id="myHeader"
-    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15); display: flex; height: 125px; position: sticky; top: 0; background-color: rgb(154, 154, 159);">
-    <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
-      <h1> Opret konto hos Delfinen svømmeklub </h1>
-    </div>
-    <h1 style="font-size: 1.5vw;" id="curUser"></h1>
-  </header>
+  >
+  <video autoplay muted loop id="myVideo">
+    <source src="assets/pixabay-swim.mp4" type="video/mp4">
+  </video>
+  <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
+    
+    <h1> Opret konto hos Delfinen svømmeklub </h1>
+  </div>
+  <h1 style="font-size: 1.5vw;" id="curUser"></h1>
+</header>
+
+
 
   <button onclick="goToMain()">Go back</button>
   <form id="signup-form">
 
-    <input type="email" placeholder="Email" id="email" required>
+    <input type="text" placeholder="Email" id="email" required>
     <input type="password" placeholder="Kode" id="password" minlength="6" required>
+    <input placeholder="Navn" type="text" id="name" required>
+
+    <input placeholder="Alder" type="text" id="age" required>
+    <br>
+    <label for="userType">Vælg din svømmekategori</label>
+    <select id="userType">
+      <option value="exerciser">Motionist</option>
+      <option value="competition">Konkurrencesvømmer</option>
+    </select>
 
 
 
-    <div>
-      <label for="name">Navn:</label>
-      <input type="name" id="name" required>
-    </div>
-    <div>
-      <label for="age">Alder:</label>
-      <input type="age" id="age" required>
-    </div>
-  
-
-
-
-    <div>
-      <label for="userType">Vælg din svømmekategori</label>
-     
-      <select id="userType">
-        <option value="exerciser">Motionist</option>
-        <option value="competition">Konkurrencesvømmer</option>
-       
-      </select>
-
-    </div>
-
-
-
-    <div>
-      <label for="subscription">Vælg Abbonement</label>
-     
-      <select id="subscription">
-        <option value="active">Aktiv</option>
-        <option value="passive">Passiv</option>
-       
-      </select>
-
-    </div>
+    <br>
+    <label for="subscription">Vælg Abbonement</label>
+    <select id="subscription">
+      <option value="active">Aktiv</option>
+      <option value="passive">Passiv</option><br>
+    </select>
 
     <button type="submit">Sign up</button>
   </form>
+
+
   <div id="signup-message"></div>
 
 
-  <div style="display: flex; justify-content: center; align-items: center; height: 30vw;">
+  <div class="imageDiv">
     <img src="images/logo.png" alt="Logo" style="max-width: 100%; max-height: 100%;">
   </div>
 

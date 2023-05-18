@@ -18,7 +18,7 @@ var auth = firebase.auth();
 // Get a reference to the signup form and signup message
 const signupForm = document.getElementById('signup-form');
 const signupMessage = document.getElementById('signup-message');
-
+console.log(new Date())
 // Add a listener to the signup form for when it's submitted
 signupForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -27,9 +27,14 @@ signupForm.addEventListener('submit', (e) => {
   const email = signupForm.email.value;
   const password = signupForm.password.value;
   const name = signupForm.name.value;
-  const age = signupForm.age.value;
+  const age = signupForm.birthdate.value;
   const userType = signupForm.userType.value;
   const subscription = signupForm.subscription.value;
+  const gender = signupForm.gender.value;
+  const phone = signupForm.phone.value;
+
+
+
 
   // Call Firebase auth to create a new user with the email and password
   firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -46,13 +51,30 @@ firebase.auth().onAuthStateChanged(function(user) {
     const user = firebase.auth().currentUser;
     const uid = user.uid;
     const email = user.email;
-    
+   
 
     var date = new Date();
+
+    var birthdate = new Date(age);
+    var age1 = date.getFullYear() - birthdate.getFullYear();
+    
+    if (
+      date.getMonth() < birthdate.getMonth() ||
+      (date.getMonth() === birthdate.getMonth() && date.getDate() < birthdate.getDate())
+    ) {
+       age1--;
+    }
+    console.log(age1);
+
+
+
+
+
+
     var options1 = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'Europe/Copenhagen' };
     var formattedDate = date.toLocaleString('da-DK', options1);
     var stage = "none"
-    if (age >= 18){
+    if (age1 >= 18){
       stage = "senior"
     } else {
       stage = "junior"
@@ -61,11 +83,13 @@ firebase.auth().onAuthStateChanged(function(user) {
       uid: uid,
       email: email,
       oprettet: formattedDate,
-      name: age,
-      age: name,
+      name: name,
+      age: age1,
       userType: userType,
       subscription: subscription,
-      stage: stage
+      stage: stage,
+      gender: gender,
+      phone: phone
     };
     
     

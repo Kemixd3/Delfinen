@@ -14,22 +14,32 @@
   <nav class="text-center" style="align-items: center;  justify-content: center;     display: flex;   ">
     <a href="#user" class="view-link">Main</a>
     <a href="#home" class="view-link">Home</a>
-    <a href="#news" class="view-link">News</a>
-    <a href="#about" class="view-link">About</a>
-    <a href="#contact" class="view-link">Contact</a>
+    <a href="#news" class="view-link">Nyheder</a>
+    <a href="#about" class="view-link">Om os</a>
+    <a href="#contact" class="view-link">Kontakt</a>
+    <button id="logoutButton">Log ud</button>
+
 
 </nav>
-<div id="content"></div>
+<section> 
+<div id="welcome-text" style="align-items: center;  justify-content: center;     display: flex;   ">
+  <h1 class="ocean-heading"> Delfinen Svømmeklub </h1>
+</div>
+</section>
+
+
+
+<section> 
   <video autoplay muted loop id="myVideo">
     <source src="assets/pixabay-swim.mp4" type="video/mp4">
   </video>
 
-  <div style="align-items: center;  justify-content: center;     display: flex;   ">
-    <h1 class="ocean-heading"> Delfinen Svømmeklub </h1>
-  </div>
-  <h1 style="font-size: 1.5vw;" id="curUser"></h1>
-  
 
+  <h1 style="font-size: 1.5vw;" id="curUser"></h1>
+  <div id="content"></div>
+</section>
+  
+<section> 
   <div id="signIn">
   <form>
     <input type="text" id="email2" placeholder="Email">
@@ -40,6 +50,7 @@
   <div id="signupBtn" style="align-items: center;  justify-content: center;     display: flex;   ">
     <button onclick="goToSignup()">Go to Signup Page</button>
   </div>
+</section>
 
   <div class="imageDiv">
     <img src="images/logo.png" alt="Logo" >
@@ -60,7 +71,8 @@
       <h3>
         Telefon: +45 49 42 06 66<br>
         Addresse: Guldbergsgade 29N, 2200 København<br>
-        Email: Delfinen@Svømmeklub.dk
+        Email: Delfinen@Svømmeklub.dk<br>
+        CVR: XXXXXXXX
       </h3>
     </div>
   </footer>
@@ -70,7 +82,9 @@
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
 
-  <script src="script.js?v=12"></script>
+  
+  <script type="module" src="script.js?v=12"></script>
+
 
 </body>
 

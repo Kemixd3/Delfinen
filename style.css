@@ -158,3 +158,22 @@ body {
 
 }
 
+
+.center-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+.cool-text {
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+  color: black;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}

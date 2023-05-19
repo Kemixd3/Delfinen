@@ -8,9 +8,18 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/style.css">
 </head>
-
+   <!-- <button id="logOut-btn" class="login-out-btn hidden">Log ud</button> -->
 
 <body>
+  <nav class="text-center" style="align-items: center;  justify-content: center;     display: flex;   ">
+    <a href="#user" class="view-link">Main</a>
+    <a href="#home" class="view-link">Home</a>
+    <a href="#news" class="view-link">News</a>
+    <a href="#about" class="view-link">About</a>
+    <a href="#contact" class="view-link">Contact</a>
+
+</nav>
+<div id="content"></div>
   <video autoplay muted loop id="myVideo">
     <source src="assets/pixabay-swim.mp4" type="video/mp4">
   </video>
@@ -20,12 +29,15 @@
   </div>
   <h1 style="font-size: 1.5vw;" id="curUser"></h1>
   
+
+  <div id="signIn">
   <form>
     <input type="text" id="email2" placeholder="Email">
     <input type="password" id="password2" placeholder="Kode">
     <button type="submit" id="sign-in-button">Sign In</button>
   </form>
-  <div style="align-items: center;  justify-content: center;     display: flex;   ">
+</div>
+  <div id="signupBtn" style="align-items: center;  justify-content: center;     display: flex;   ">
     <button onclick="goToSignup()">Go to Signup Page</button>
   </div>
 

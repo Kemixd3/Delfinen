@@ -15,6 +15,63 @@ firebase.initializeApp(firebaseConfig);
 var auth = firebase.auth();
 
 
+
+
+
+// Get the content container element
+var content = document.getElementById('content');
+
+// Function to handle the hashchange event
+function handleHashChange() {
+  // Get the hash value from the URL
+  var hash = window.location.hash;
+  
+  // Remove the '#' character from the hash
+  var view = hash.substring(1);
+  
+  // Clear the content container
+  content.innerHTML = '';
+  
+  // Load the appropriate content based on the view
+  if (view === 'home') {
+    content.innerHTML = '<h1>Welcome to the Home page</h1>';
+  } else if (view === 'news') {
+    content.innerHTML = '<h1>Latest News</h1><p>Here are the latest news articles...</p>';
+  } else if (view === 'about') {
+    content.innerHTML = '<h1>About Us</h1><p>Learn more about our company...</p>';
+  } else if (view === 'contact') {
+    content.innerHTML = '<h1>Contact Us</h1><p>Get in touch with us...</p>';
+  }
+}
+
+// Add event listener for hashchange event
+window.addEventListener('hashchange', handleHashChange);
+
+// Initial page load - call the handleHashChange function
+handleHashChange();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Get a reference to the signup form and signup message
 const signupForm = document.getElementById('signup-form');
 const signupMessage = document.getElementById('signup-message');
@@ -64,7 +121,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     ) {
        age1--;
     }
-    console.log(age1);
+ 
 
 
 

@@ -16,6 +16,62 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var auth = firebase.auth();
 
+
+
+
+
+
+// Get the content container element
+var content = document.getElementById('content');
+var signIn = document.getElementById('signIn');
+signIn.style.display = 'block';
+// Function to handle the hashchange event
+function handleHashChange() {
+  // Get the hash value from the URL
+  var hash = window.location.hash;
+  
+  // Remove the '#' character from the hash
+  var view = hash.substring(1);
+  
+  // Clear the content container
+  content.innerHTML = '';
+  
+  // Load the appropriate content based on the view
+  if (view === 'home') {
+    
+    signIn.style.display = 'none';
+    content.innerHTML = '<h1>Delfinen Home page</h1>';
+  } else if (view === 'news') {
+    content.innerHTML = '<h1>Latest News</h1><p>Here are the latest news articles...</p>';
+  } else if (view === 'about') {
+    content.innerHTML = '<h1>About Us</h1><p>Learn more about our company...</p>';
+  } else if (view === 'contact') {
+    content.innerHTML = '<h1>Contact Us</h1><p>Get in touch with us...</p>';
+  }
+}
+
+// Add event listener for hashchange event
+window.addEventListener('hashchange', handleHashChange);
+
+// Initial page load - call the handleHashChange function
+handleHashChange();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var signInButton = document.getElementById('sign-in-button');
 signInButton.addEventListener('click', function (event) {
   event.preventDefault();
@@ -52,8 +108,11 @@ signInButton.addEventListener('click', function (event) {
         curUserElement.innerHTML = "Brugernavn: " + (name || "none") + "&nbsp;" + "</br>" + "Mail: " + (user.email || "none");
       }
       //const data = JSON.parse(userData);
-
-
+      var signIn = document.getElementById('signIn');
+      
+      var signupBtn = document.getElementById('signupBtn');
+      signIn.style.display = 'none';
+      signupBtn.style.display = 'none';
     })
     .catch(function (error) {
       // Handle sign-in error
@@ -80,12 +139,34 @@ window.onscroll = function () {
 }
 
 //Initialize Firebase realtime database
-window.addEventListener("load", init);
+//window.addEventListener("load", init);
 
 //========Function to display the products using FETCH GET request=======
-async function init() {
+//async function init() {
 
-}
+//}
 
 //======Function to edit product data using PUT request========
 
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    var signIn = document.getElementById('signIn');
+      
+    var signupBtn = document.getElementById('signupBtn');
+    signIn.style.display = 'none';
+    signupBtn.style.display = 'none';
+    // User is signed in, you can proceed with accessing the protected resources
+    const uid = user.uid;
+    console.log("logged in")
+    var curUserElement = document.getElementById("curUser");
+    curUserElement.innerHTML = "Brugernavn: " + (name || "none") + "&nbsp;" + "</br>" + "Mail: " + (user.email || "none");
+   
+    console.log(user.uid)
+    // Make the API call here
+    // ...
+  } else {
+    console.log("logged out")
+    // User is signed out
+    // Handle sign-out case if needed
+  }
+});

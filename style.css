@@ -177,3 +177,36 @@ body {
   border-radius: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+
+ /* Navbar Styles */
+ .navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+.navbar a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+.navbar a:hover {
+  background-color: #4285F4;
+}
+
+.navbar button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.navbar button:hover {
+  background-color: #4285F4;
+}

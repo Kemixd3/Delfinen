@@ -11,16 +11,14 @@
    <!-- <button id="logOut-btn" class="login-out-btn hidden">Log ud</button> -->
 
 <body>
-  <nav class="text-center" style="align-items: center;  justify-content: center;     display: flex;   ">
-    <a href="#user" class="view-link">Main</a>
-    <a href="#home" class="view-link">Home</a>
+  <nav class="navbar">
+    <a href="#user" class="view-link">Forside</a>
+    <a href="#home" class="view-link">Profil</a>
     <a href="#news" class="view-link">Nyheder</a>
     <a href="#about" class="view-link">Om os</a>
     <a href="#contact" class="view-link">Kontakt</a>
     <button id="logoutButton">Log ud</button>
-
-
-</nav>
+  </nav>
 <section> 
 <div id="welcome-text" style="align-items: center;  justify-content: center;     display: flex;   ">
   <h1 class="ocean-heading"> Delfinen Svømmeklub </h1>
@@ -36,7 +34,19 @@
 
 
   <h1 style="font-size: 1.5vw;" id="curUser"></h1>
-  <div id="content"></div>
+  <div id="content">
+
+  </div>
+
+
+  <form id="profilForm" style="display: none;">
+    <select id="userType2">
+      <option value="" disabled selected>Vælg din svømmekategori</option>
+      <option value="exerciser">Motionist</option>
+      <option value="competition">Konkurrencesvømmer</option>
+    </select>
+    <button type="submit">Indsend resultat</button>
+  </form>
 </section>
   
 <section> 

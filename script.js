@@ -1,5 +1,6 @@
 "use strict";
 import { calculateMembershipFee } from '/pay.js';
+import { getTotalMembershipFee } from '/pay.js';
 
 const endpoint = "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app";
 
@@ -21,8 +22,10 @@ var auth = firebase.auth();
 
 // Get the content container element
 var content = document.getElementById('content');
+
 var signIn = document.getElementById('signIn');
 signIn.style.display = 'block';
+profilForm.style.display = 'none';
 // Function to handle the hashchange event
 function handleHashChange() {
   // Get the hash value from the URL
@@ -38,7 +41,19 @@ function handleHashChange() {
   if (view === 'home') {
     
     signIn.style.display = 'none';
-    content.innerHTML = '<h1 class="center-text">Delfinen Home page</h1>';
+    content.innerHTML = `
+    <h1 class="center-text">Delfinen profil side</h1>
+    <form id="profilForm">
+      <select id="userType2">
+        <option value="" disabled selected>Vælg din svømmekategori</option>
+        <option value="exerciser">Motionist</option>
+        <option value="competition">Konkurrencesvømmer</option>
+      </select>
+      <button type="submit">Indsend resultat</button>
+    </form>
+  `;
+  
+
   } else if (view === 'news') {
     content.innerHTML = '<h1 class="center-text">Latest News</h1><p>Here are the latest news articles...</p>';
   } else if (view === 'about') {
@@ -47,7 +62,7 @@ function handleHashChange() {
     content.innerHTML = '<h1 class="center-text">Kontakt info</h1><p class="center-text cool-text">Tlf: xxxxxxxx </br> Mail: xxxxx@klubben.dk</p>';
     //var welcome = document.getElementById('welcome-text');
     //welcome.style.display = 'none';
-  }
+  } 
 }
 
 // Add event listener for hashchange event
@@ -76,8 +91,8 @@ signInButton.addEventListener('click', function (event) {
       console.log('Signed in as ' + user.email);
      
       const userData = await getProfile(uid)
-   
-      if (userData != null) {
+      
+      if (userData != null && userData.name != null) {
         curUserElement.innerHTML = "Brugernavn: " + userData.name + "&nbsp;" + "</br>" + "Mail: " + (user.email || "none" );
     
        
@@ -139,13 +154,14 @@ async function getProfile(uid) {
       'Content-Type': 'application/json'
     },
   });
+  
   const userData = await response.json();
   if (userData != null) {
     const values = Object.values(userData);
     //console.log(values)
     const objWithName = values.find(obj => obj.hasOwnProperty('name'));
     //console.log(objWithName)
-    return objWithName
+    return objWithName 
   }
  
 }
@@ -162,21 +178,84 @@ firebase.auth().onAuthStateChanged(async function(user) {
     signupBtn.style.display = 'none';
     // User is signed in, you can proceed with accessing the protected resources
     const uid = user.uid;
-    console.log("logged in")
+    console.log("logging in")
+    
+
+
     var curUserElement = document.getElementById("curUser");
-    curUserElement.innerHTML = "Brugernavn: " + (name || "none") + "&nbsp;" + "</br>" + "Mail: " + (user.email || "none");
+    
+    
 
     const userData = await getProfile(uid);
+    console.log("id", userData)
+    
     if (userData && userData.age != null && userData.subscription != null && userData.stage != null) {
-      const subscriptionPrice = calculateMembershipFee(userData.age, userData.subscription, userData.stage, uid);
+      curUserElement.innerHTML = "Brugernavn: " + (userData.name || "none") + "&nbsp;" + "</br>" + "Mail: " + (userData.email || "none");
+
+
+       const response = await fetch(`${endpoint}/users/${uid}.json`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    });
+    
+    const userdate2 = await response.json();
+    const id = Object.keys(userdate2)[0];
+    console.log(id)
+
+      const subscriptionPrice = calculateMembershipFee(userData.age, userData.subscription, userData.stage, uid, id);
       curUserElement.innerHTML += " <br> Til betaling i næste periode: " + subscriptionPrice + " DKK" + "&nbsp;";
       console.log(user.uid);
     } else {
+      curUserElement.innerHTML = "Brugernavn: " + "none" + "&nbsp;" + "</br>" + "Mail: " + (user.email || "none");
       // Handle the case when userData is undefined or missing required properties
       console.log("User data is missing or incomplete");
     }
     
+    if (userData.admin != null && userData.admin == true) {
+
+      user.getIdToken()
+    .then(async function (token) {
+      
+      const totalMemberShopFees = await getTotalMembershipFee(token);
+      curUserElement.innerHTML += " <br>Samlet indkomst for alle aktive abbonomenter: " + totalMemberShopFees + " DKK" + "&nbsp;";
+      console.log("Admin signed in")
+    })
+    .catch(function (error) {
+      console.error('Error obtaining authentication token:', error);
+    });
+
+
+
+    
+      
+    }
+    if (userData.cashier != null && userData.cashier == true) {
+      user.getIdToken()
+      .then(async function (token) {
+        
+        const totalMemberShopFees = await getTotalMembershipFee(token);
+        curUserElement.innerHTML += " <br>Samlet indkomst for alle aktive abbonomenter: " + totalMemberShopFees + " DKK" + "&nbsp;";
+        console.log("Cashier signed in")
+      })
+      .catch(function (error) {
+        console.error('Error obtaining authentication token:', error);
+      });
   
+  
+  
+    }
+    if (userData.coach != null && userData.coach == true) {
+      console.log("coach signed in")
+
+
+
+
+    }
+
+    
 
     
     var logoutButton = document.getElementById('logoutButton');

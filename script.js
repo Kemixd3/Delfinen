@@ -30,6 +30,7 @@ profilForm.style.display = "none";
 function handleHashChange() {
   // Get the hash value from the URL
   var hash = window.location.hash;
+  var welcome = document.getElementById("wText");
 
   // Remove the '#' character from the hash
   var view = hash.substring(1);
@@ -39,9 +40,10 @@ function handleHashChange() {
 
   // Load the appropriate content based on the view
   if (view === "home") {
+    welcome.innerHTML = "Delfinen profil side";
     signIn.style.display = "none";
     content.innerHTML = `
-    <h1 class="center-text">Delfinen profil side</h1>
+    <button id="logoutButton">Log ud</button>
     <form id="profilForm">
       <select id="userType2">
         <option value="" disabled selected>Vælg din svømmekategori</option>
@@ -51,17 +53,10 @@ function handleHashChange() {
       <button type="submit">Indsend resultat</button>
     </form>
   `;
-  } else if (view === "news") {
-    content.innerHTML =
-      '<h1 class="center-text">Latest News</h1><p>Here are the latest news articles...</p>';
   } else if (view === "about") {
-    content.innerHTML =
-      '<h1 class="center-text">About Us</h1><p>Learn more about our company...</p>';
-  } else if (view === "contact") {
-    content.innerHTML =
-      '<h1 class="center-text">Kontakt info</h1><p class="center-text cool-text">Tlf: xxxxxxxx </br> Mail: xxxxx@klubben.dk</p>';
-    //var welcome = document.getElementById('welcome-text');
-    //welcome.style.display = 'none';
+    welcome.innerHTML = "Om os:";
+  } else if (view === "user") {
+    welcome.innerHTML = "Delfinen Svømmegruppe:";
   }
 }
 

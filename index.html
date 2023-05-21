@@ -38,18 +38,9 @@
       <source src="assets/pixabay-swim.mp4" type="video/mp4">
     </video>
 
-
-
-
     <section>
-      <video autoplay muted loop id="myVideo">
-        <source src="assets/pixabay-swim.mp4" type="video/mp4" />
-      </video>
-
       <h1 style="font-size: 1.5vw" id="curUser"></h1>
-
       <div id="content"></div>
-
 
       <form id="profilForm" style="display: none">
         <select id="userType2">
@@ -59,32 +50,28 @@
         </select>
         <button type="submit">Indsend resultat</button>
       </form>
-      
-
-    </div>
-    <div id="signupBtn" style="align-items: center;  justify-content: center;     display: flex;   ">
-      <button onclick="goToSignup()">Go to Signup Page</button>
-    </div>
-  </section>
-
-    </section>
 
 
-    <section>
-      <div id="signIn">
-        <form>
-          <input type="text" id="email2" placeholder="Email" />
-          <input type="password" id="password2" placeholder="Kode" />
-          <button type="submit" id="sign-in-button">Sign In</button>
-        </form>
       </div>
-      <div
-        id="signupBtn"
-        style="align-items: center; justify-content: center; display: flex"
-      >
+      <div id="signupBtn" style="align-items: center;  justify-content: center;     display: flex;   ">
         <button onclick="goToSignup()">Go to Signup Page</button>
       </div>
     </section>
+
+  </section>
+
+
+  <section>
+    <div id="signIn">
+      <form>
+        <input type="text" id="email2" placeholder="Email" />
+        <input type="password" id="password2" placeholder="Kode" />
+        <button type="submit" id="sign-in-button">Sign In</button>
+      </form>
+    </div>
+    <div id="signupBtn" style="align-items: center; justify-content: center; display: flex">
+    </div>
+  </section>
 
 
   <footer id="footer">
@@ -105,28 +92,30 @@
         Email: Delfinen@Svømmeklub.dk<br>
         CVR: XXXXXXXX
       </h3>
-
-    <div class="imageDiv">
-      <img src="images/logo.png" alt="Logo" />
-
     </div>
+  </footer>
+
+  <div class="imageDiv">
+    <img src="images/logo.png" alt="Logo" />
+
+  </div>
 
 
 
-    <!-- Initialize Firebase in your app -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
+  <!-- Initialize Firebase in your app -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
 
 
 
 
-    <script type="module" src="script.js?v=12"></script>
-    <script>
-      function goToSignup() {
-        window.location.href = "signup.html";
-      }
-    </script>
-  </body>
+  <script type="module" src="script.js?v=12"></script>
+  <script>
+    function goToSignup() {
+      window.location.href = "signup.html";
+    }
+  </script>
+</body>
+
 </html>
-

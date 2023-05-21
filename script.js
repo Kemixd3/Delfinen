@@ -201,7 +201,6 @@ window.onscroll = function () {
 //======Function to edit product data using PUT request========
 
 async function getProfile(uid) {
-  //console.log("PROF", uid)
   const response = await fetch(`${endpoint}/users/${uid}.json`, {
     method: "GET",
     headers: {
@@ -212,9 +211,11 @@ async function getProfile(uid) {
 
   const userData = await response.json();
 
+  console.log(uid,"uid");
+  console.log(userData,"userData");
+
   if (userData != null) {
     const values = Object.values(userData);
-    console.log(userData,"here");
     const objWithName = values.find((obj) => obj.hasOwnProperty("name"));
     //console.log(objWithName)
     return objWithName;
@@ -230,6 +231,8 @@ firebase.auth().onAuthStateChanged(async function (user) {
     signupBtn.style.display = "none";
     // User is signed in, you can proceed with accessing the protected resources
     const uid = user.uid;
+
+    console.log(user, "user role");
     console.log("logging in");
     
     const header = document.getElementById('pageFill');
@@ -240,7 +243,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
     var curUserElement = document.getElementById("curUser");
 
     const userData = await getProfile(uid);
-    console.log("id", userData);
     console.log("id", userData);
 
     if (

@@ -35,6 +35,7 @@ function handleHashChange(uid, name, email, stage, token) {
   // Get the hash value from the URL
 
   var hash = window.location.hash;
+  var welcome = document.getElementById("wText");
 
   // Remove the '#' character from the hash
   var view = hash.substring(1);
@@ -44,10 +45,11 @@ function handleHashChange(uid, name, email, stage, token) {
 
   // Load the appropriate content based on the view
   if (view === "home") {
+    welcome.innerHTML = "Delfinen profil side";
     oceanheading.style.display = "none";
     signIn.style.display = "none";
     content.innerHTML = `
-      <h1 class="center-text">Delfinen profil side</h1>
+   
       <form id="profilForm2">
         <select id="userType2">
           <option value="" disabled selected>Vælg din svømmekategori</option>
@@ -106,14 +108,11 @@ function handleHashChange(uid, name, email, stage, token) {
           console.error("Error posting membership fee:", error);
         });
     });
+
   } else if (view === "about") {
-    content.innerHTML =
-      '<h1 class="center-text">About Us</h1><p>Learn more about our company...</p>';
-  } else if (view === "contact") {
-    content.innerHTML =
-      '<h1 class="center-text">Kontakt info</h1><p class="center-text cool-text">Tlf: xxxxxxxx </br> Mail: xxxxx@klubben.dk</p>';
-    //var welcome = document.getElementById('welcome-text');
-    //welcome.style.display = 'none';
+    welcome.innerHTML = "Om os:";
+  } else if (view === "user") {
+    welcome.innerHTML = "Delfinen Svømmegruppe:";
   }
 }
 

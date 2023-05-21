@@ -1,83 +1,84 @@
 "use strict";
+import { calculateMembershipFee } from "/pay.js";
+import { getTotalMembershipFee } from "/pay.js";
 
-const endpoint = "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app";
+const endpoint =
+  "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app";
 
 var firebaseConfig = {
   apiKey: " AIzaSyBuWPU0zqYMOcDZqhBj6lYhJ1Clo8hoFfI",
   authDomain: "javascriptgame-4e4c9.firebaseapp.com",
-  databaseURL: "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app",
+  databaseURL:
+    "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "javascriptgame-4e4c9",
   storageBucket: "javascriptgame-4e4c9.appspot.com",
   messagingSenderId: "929889109178",
   appId: "1:929889109178:web:b4b41c9bf29de88d7c6e83",
-  measurementId: "G-P40H8CJHRK"
+  measurementId: "G-P40H8CJHRK",
 };
 
 firebase.initializeApp(firebaseConfig);
 var auth = firebase.auth();
 
-
-
-
-
-
 // Get the content container element
-var content = document.getElementById('content');
-var signIn = document.getElementById('signIn');
-signIn.style.display = 'block';
+var content = document.getElementById("content");
+
+var signIn = document.getElementById("signIn");
+signIn.style.display = "block";
+profilForm.style.display = "none";
 // Function to handle the hashchange event
 function handleHashChange() {
   // Get the hash value from the URL
   var hash = window.location.hash;
-  
+
   // Remove the '#' character from the hash
   var view = hash.substring(1);
-  
+
   // Clear the content container
-  content.innerHTML = '';
-  
+  content.innerHTML = "";
+
   // Load the appropriate content based on the view
-  if (view === 'home') {
-    
-    signIn.style.display = 'none';
-    content.innerHTML = '<h1>Delfinen Home page</h1>';
-  } else if (view === 'news') {
-    content.innerHTML = '<h1>Latest News</h1><p>Here are the latest news articles...</p>';
-  } else if (view === 'about') {
-    content.innerHTML = '<h1>About Us</h1><p>Learn more about our company...</p>';
-  } else if (view === 'contact') {
-    content.innerHTML = '<h1>Contact Us</h1><p>Get in touch with us...</p>';
+  if (view === "home") {
+    signIn.style.display = "none";
+    content.innerHTML = `
+    <h1 class="center-text">Delfinen profil side</h1>
+    <form id="profilForm">
+      <select id="userType2">
+        <option value="" disabled selected>Vælg din svømmekategori</option>
+        <option value="exerciser">Motionist</option>
+        <option value="competition">Konkurrencesvømmer</option>
+      </select>
+      <button type="submit">Indsend resultat</button>
+    </form>
+  `;
+  } else if (view === "news") {
+    content.innerHTML =
+      '<h1 class="center-text">Latest News</h1><p>Here are the latest news articles...</p>';
+  } else if (view === "about") {
+    content.innerHTML =
+      '<h1 class="center-text">About Us</h1><p>Learn more about our company...</p>';
+  } else if (view === "contact") {
+    content.innerHTML =
+      '<h1 class="center-text">Kontakt info</h1><p class="center-text cool-text">Tlf: xxxxxxxx </br> Mail: xxxxx@klubben.dk</p>';
+    //var welcome = document.getElementById('welcome-text');
+    //welcome.style.display = 'none';
   }
 }
 
 // Add event listener for hashchange event
-window.addEventListener('hashchange', handleHashChange);
+window.addEventListener("hashchange", handleHashChange);
 
 // Initial page load - call the handleHashChange function
 handleHashChange();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var signInButton = document.getElementById('sign-in-button');
-signInButton.addEventListener('click', function (event) {
+var signInButton = document.getElementById("sign-in-button");
+signInButton.addEventListener("click", function (event) {
   event.preventDefault();
-  var email = document.getElementById('email2').value;
-  var password = document.getElementById('password2').value;
-  firebase.auth().signInWithEmailAndPassword(email, password)
+  var email = document.getElementById("email2").value;
+  var password = document.getElementById("password2").value;
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
     .then(async function (userCredential) {
       // User signed in successfully
       var user = userCredential.user;
@@ -87,32 +88,33 @@ signInButton.addEventListener('click', function (event) {
       // Append the variable to the existing string
       //curUserElement.innerHTML = "Bruger: " + user.email + "&nbsp;";
 
-      console.log('Signed in as ' + user.email);
-      const response = await fetch(`${endpoint}/users/${uid}.json`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-      });
-      const userData = await response.json();
-      if (userData != null) {
-        const values = Object.values(userData);
-        console.log(values)
-        const objWithName = values.find(obj => obj.hasOwnProperty('name'));
+      console.log("Signed in as " + user.email);
 
-        const name = objWithName.name;
-        curUserElement.innerHTML = "Brugernavn: " + name + "&nbsp;" + "</br>" + "Mail: " + (user.email || "none");
+      const userData = await getProfile(uid);
 
+      if (userData != null && userData.name != null) {
+        curUserElement.innerHTML =
+          "Brugernavn: " +
+          userData.name +
+          "&nbsp;" +
+          "</br>" +
+          "Mail: " +
+          (user.email || "none");
       } else {
-        curUserElement.innerHTML = "Brugernavn: " + (name || "none") + "&nbsp;" + "</br>" + "Mail: " + (user.email || "none");
+        curUserElement.innerHTML =
+          "Brugernavn: " +
+          (userData.name || "none") +
+          "&nbsp;" +
+          "</br>" +
+          "Mail: " +
+          (user.email || "none");
       }
       //const data = JSON.parse(userData);
-      var signIn = document.getElementById('signIn');
-      
-      var signupBtn = document.getElementById('signupBtn');
-      signIn.style.display = 'none';
-      signupBtn.style.display = 'none';
+      var signIn = document.getElementById("signIn");
+
+      var signupBtn = document.getElementById("signupBtn");
+      signIn.style.display = "none";
+      signupBtn.style.display = "none";
     })
     .catch(function (error) {
       // Handle sign-in error
@@ -136,7 +138,7 @@ window.onscroll = function () {
     document.getElementById("myHeader").style.top = "-150px"; // Hide the header when scrolling down
   }
   prevScrollpos = currentScrollPos;
-}
+};
 
 //Initialize Firebase realtime database
 //window.addEventListener("load", init);
@@ -148,24 +150,156 @@ window.onscroll = function () {
 
 //======Function to edit product data using PUT request========
 
-firebase.auth().onAuthStateChanged(function(user) {
+async function getProfile(uid) {
+  //console.log("PROF", uid)
+  const response = await fetch(`${endpoint}/users/${uid}.json`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+
+  const userData = await response.json();
+  if (userData != null) {
+    const values = Object.values(userData);
+    //console.log(values)
+    const objWithName = values.find((obj) => obj.hasOwnProperty("name"));
+    //console.log(objWithName)
+    return objWithName;
+  }
+}
+
+firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    var signIn = document.getElementById('signIn');
-      
-    var signupBtn = document.getElementById('signupBtn');
-    signIn.style.display = 'none';
-    signupBtn.style.display = 'none';
+    var signIn = document.getElementById("signIn");
+
+    var signupBtn = document.getElementById("signupBtn");
+    signIn.style.display = "none";
+    signupBtn.style.display = "none";
     // User is signed in, you can proceed with accessing the protected resources
     const uid = user.uid;
-    console.log("logged in")
+    console.log("logging in");
+
     var curUserElement = document.getElementById("curUser");
-    curUserElement.innerHTML = "Brugernavn: " + (name || "none") + "&nbsp;" + "</br>" + "Mail: " + (user.email || "none");
-   
-    console.log(user.uid)
+
+    const userData = await getProfile(uid);
+    console.log("id", userData);
+
+    if (
+      userData &&
+      userData.age != null &&
+      userData.subscription != null &&
+      userData.stage != null
+    ) {
+      curUserElement.innerHTML =
+        "Brugernavn: " +
+        (userData.name || "none") +
+        "&nbsp;" +
+        "</br>" +
+        "Mail: " +
+        (userData.email || "none");
+
+      const response = await fetch(`${endpoint}/users/${uid}.json`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      const userdate2 = await response.json();
+      const id = Object.keys(userdate2)[0];
+      console.log(id);
+
+      const subscriptionPrice = calculateMembershipFee(
+        userData.age,
+        userData.subscription,
+        userData.stage,
+        uid,
+        id
+      );
+      curUserElement.innerHTML +=
+        " <br> Til betaling i næste periode: " +
+        subscriptionPrice +
+        " DKK" +
+        "&nbsp;";
+      console.log(user.uid);
+    } else {
+      curUserElement.innerHTML =
+        "Brugernavn: " +
+        "none" +
+        "&nbsp;" +
+        "</br>" +
+        "Mail: " +
+        (user.email || "none");
+      // Handle the case when userData is undefined or missing required properties
+      console.log("User data is missing or incomplete");
+    }
+
+    if (userData.admin != null && userData.admin == true) {
+      user
+        .getIdToken()
+        .then(async function (token) {
+          const totalMemberShopFees = await getTotalMembershipFee(token);
+          curUserElement.innerHTML +=
+            " <br>Samlet indkomst for alle aktive abbonomenter: " +
+            totalMemberShopFees +
+            " DKK" +
+            "&nbsp;";
+          console.log("Admin signed in");
+        })
+        .catch(function (error) {
+          console.error("Error obtaining authentication token:", error);
+        });
+    }
+    if (userData.cashier != null && userData.cashier == true) {
+      user
+        .getIdToken()
+        .then(async function (token) {
+          const totalMemberShopFees = await getTotalMembershipFee(token);
+          curUserElement.innerHTML +=
+            " <br>Samlet indkomst for alle aktive abbonomenter: " +
+            totalMemberShopFees +
+            " DKK" +
+            "&nbsp;";
+          console.log("Cashier signed in");
+        })
+        .catch(function (error) {
+          console.error("Error obtaining authentication token:", error);
+        });
+    }
+    if (userData.coach != null && userData.coach == true) {
+      console.log("coach signed in");
+    }
+
+    var logoutButton = document.getElementById("logoutButton");
+    logoutButton.style.display = "block";
+    // Add a click event listener to the logout button
+    logoutButton.addEventListener("click", function () {
+      // Call the signOut method to log out the user
+      firebase
+        .auth()
+        .signOut()
+
+        .then(function () {
+          location.reload();
+          // Logout successful
+          console.log("User logged out successfully.");
+          // You can redirect to a different page or update UI as needed
+        })
+        .catch(function (error) {
+          // An error occurred
+          console.log("Error logging out:", error);
+        });
+    });
+
     // Make the API call here
     // ...
   } else {
-    console.log("logged out")
+    console.log("logged out");
+    var logoutButton = document.getElementById("logoutButton");
+    logoutButton.style.display = "none";
     // User is signed out
     // Handle sign-out case if needed
   }

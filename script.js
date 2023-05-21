@@ -46,10 +46,9 @@ function handleHashChange(uid, name, email, stage, token) {
   // Load the appropriate content based on the view
   if (view === "home") {
     welcome.innerHTML = "Delfinen profil side";
-    oceanheading.style.display = "none";
     signIn.style.display = "none";
     content.innerHTML = `
-   
+    <button id="logoutButton">Log ud</button>
       <form id="profilForm2">
         <select id="userType2">
           <option value="" disabled selected>Vælg din svømmekategori</option>
@@ -224,14 +223,14 @@ async function getProfile(uid) {
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     var signIn = document.getElementById("signIn");
-
+    
     var signupBtn = document.getElementById("signupBtn");
     signIn.style.display = "none";
     signupBtn.style.display = "none";
     // User is signed in, you can proceed with accessing the protected resources
     const uid = user.uid;
     console.log("logging in");
-
+    
     var curUserElement = document.getElementById("curUser");
 
     const userData = await getProfile(uid);
@@ -262,6 +261,9 @@ firebase.auth().onAuthStateChanged(async function (user) {
       const userdate2 = await response.json();
       const id = Object.keys(userdate2)[0];
       console.log(id);
+
+      
+      
 
       const subscriptionPrice = calculateMembershipFee(
         userData.age,

@@ -211,9 +211,10 @@ async function getProfile(uid) {
   });
 
   const userData = await response.json();
+
   if (userData != null) {
     const values = Object.values(userData);
-    //console.log(values)
+    console.log(values)
     const objWithName = values.find((obj) => obj.hasOwnProperty("name"));
     //console.log(objWithName)
     return objWithName;
@@ -231,9 +232,15 @@ firebase.auth().onAuthStateChanged(async function (user) {
     const uid = user.uid;
     console.log("logging in");
     
+    const header = document.getElementById('pageFill');
+    const footer = document.getElementById('footer');
+    header.style.height = '100vh';
+    footer.style.backgroundColor = 'white';
+
     var curUserElement = document.getElementById("curUser");
 
     const userData = await getProfile(uid);
+    console.log("id", userData);
     console.log("id", userData);
 
     if (
@@ -261,9 +268,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
       const userdate2 = await response.json();
       const id = Object.keys(userdate2)[0];
       console.log(id);
-
-      
-      
 
       const subscriptionPrice = calculateMembershipFee(
         userData.age,

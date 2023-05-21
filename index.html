@@ -13,6 +13,7 @@
 <!-- <button id="logOut-btn" class="login-out-btn hidden">Log ud</button> -->
 
 <body>
+  <div id="pageFill" class="pageFill"></div>
 
   <nav id="navBar" class="navbar">
     <a href="#user" class="view-link">Forside</a>
@@ -25,23 +26,23 @@
 
   </nav>
 
-  
+
   <div id="welcome-text" style="align-items: center;  justify-content: center;display: flex;">
     <h1 id="wText" style="text-align: center;"> Delfinen Svømmeklub </h1>
   </div>
-  
-  <video autoplay muted loop id="myVideo" >
-    <source src="assets/pixabay-swim.mp4" type="video/mp4">
-  </video>
-  
+
   <section>
+    <video autoplay muted loop id="myVideo" style="z-index: -55;">
+      <source src="assets/pixabay-swim.mp4" type="video/mp4">
+    </video>
+
     <h1 style="font-size: 1.5vw;" id="curUser"></h1>
-    
+
     <div id="content">
-      
-      
+
+
     </div>
-    
+
     <form id="profilForm" style="display: none;">
       <select id="userType2">
         <option value="" disabled selected>Vælg din svømmekategori</option>
@@ -51,8 +52,8 @@
       <button type="submit">Indsend resultat</button>
     </form>
   </section>
-  
-  
+
+
   <section>
     <div id="signIn">
       <form>
@@ -65,13 +66,14 @@
       <button onclick="goToSignup()">Go to Signup Page</button>
     </div>
   </section>
-  
-  
+
+
   <div class="imageDiv">
     <img src="images/logo.png" alt="Logo">
   </div>
-  
-  <footer>
+
+
+  <footer id="footer">
     <div class="footer-section">
       <h3>Af Nikolai Berthesen og Silas Sandager, DATAv2</h3>
     </div>
@@ -81,15 +83,15 @@
         Denne ophavsretserklæring gælder for alle elementer, der ejes af Delfin Svømmeklub,<br> herunder men ikke
         begrænset til logoer, billeder, tekst, design og software.<br> Alle sådanne elementer er beskyttet af ophavsret
         og andre gældende <br>love om intellektuel ejendomsret.</h3>
-      </div>
-      <div class="footer-section">
-        <h3>
-          Telefon: +45 49 42 06 66<br>
-          Addresse: Guldbergsgade 29N, 2200 København<br>
-          Email: Delfinen@Svømmeklub.dk<br>
-          CVR: XXXXXXXX
-        </h3>
-      </div>
+    </div>
+    <div class="footer-section">
+      <h3>
+        Telefon: +45 49 42 06 66<br>
+        Addresse: Guldbergsgade 29N, 2200 København<br>
+        Email: Delfinen@Svømmeklub.dk<br>
+        CVR: XXXXXXXX
+      </h3>
+    </div>
   </footer>
 
   <!-- Initialize Firebase in your app -->

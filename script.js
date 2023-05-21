@@ -214,7 +214,7 @@ async function getProfile(uid) {
 
   if (userData != null) {
     const values = Object.values(userData);
-    console.log(values)
+    console.log(userData,"here");
     const objWithName = values.find((obj) => obj.hasOwnProperty("name"));
     //console.log(objWithName)
     return objWithName;

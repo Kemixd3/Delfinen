@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html lang="dk">
 
-<head>
-  <title>Svømmeklubben</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="/style.css">
-</head>
+  
 
+  <head>
+    <title>Svømmeklubben</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <!-- <button id="logOut-btn" class="login-out-btn hidden">Log ud</button> -->
 <body>
   <nav class="navbar">
     <a href="#user" class="view-link">Forside</a>
     <a href="#about" class="view-link">Om os</a>
+     <button id="logoutButton">Log ud</button>
     <a href="#home" style=" background: transparent; right: 2%; position: absolute;" display: inline-block; padding: 0;
       border: none; background: none; text-decoration: none;">
       <img src="images/profile.png" style="width: 5vw;">
     </a>
+                                                       
   </nav>
+                                                       
+                                                       
+                                                       
   <section>
     <div id="welcome-text" style="align-items: center;  justify-content: center;     display: flex;   ">
       <h1 id="wText" class="ocean-heading"> Delfinen Svømmeklub </h1>
     </div>
   </section>
+                                          
   <section>
     <video autoplay muted loop id="myVideo">
       <source src="assets/pixabay-swim.mp4" type="video/mp4">
@@ -31,6 +39,8 @@
     <h1 style="font-size: 1.5vw;" id="curUser"></h1>
 
     <div id="content">
+                     
+                  
     </div>
 
     <form id="profilForm" style="display: none;">
@@ -42,6 +52,7 @@
       <button type="submit">Indsend resultat</button>
     </form>
   </section>
+                            
 
   <section>
     <div id="signIn">
@@ -55,6 +66,7 @@
       <button onclick="goToSignup()">Go to Signup Page</button>
     </div>
   </section>
+                                     
 
   <div class="imageDiv">
     <img src="images/logo.png" alt="Logo">
@@ -89,4 +101,5 @@
   <script type="module" src="script.js?v=12"></script>
 </body>
 
+                                            
 </html>

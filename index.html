@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <html lang="dk">
-  <head>
-    <title>Svømmeklubben</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <!-- <button id="logOut-btn" class="login-out-btn hidden">Log ud</button> -->
-  <body>
-    <nav class="navbar">
-      <a href="#user" class="view-link">Forside</a>
-      <a href="#about" class="view-link">Om os</a>
-      <button id="logoutButton">Log ud</button>
-      <a
-        href="#home"
-        style="
-          background: transparent;
-          right: 2%;
-          position: absolute;
-          display: inline-block;
-          padding: 0;
-          border: none;
-          background: none;
-          text-decoration: none;
-        "
-      >
-        <img src="images/profile.png" style="width: 5vw" />
-      </a>
-    </nav>
 
-    <section>
-      <div
-        id="welcome-text"
-        style="align-items: center; justify-content: center; display: flex"
-      >
-        <h1 id="wText" style="text-align: center" class="ocean-heading">
-          Delfinen Svømmeklub
-        </h1>
-      </div>
-    </section>
+
+
+
+<head>
+  <title>Svømmeklubben</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="icon" type="image/x-icon" href="/images/logo.png">
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<!-- <button id="logOut-btn" class="login-out-btn hidden">Log ud</button> -->
+
+<body>
+  <div id="pageFill" class="pageFill"></div>
+
+  <nav id="navBar" class="navbar">
+    <a href="#user" class="view-link">Forside</a>
+    <a href="#about" class="view-link">Om os</a>
+
+    <a href="#home"
+      style=" background: transparent; right: 2%; position: absolute; display: inline-block; padding: 0;border: none; background: none; text-decoration: none;">
+      <img src="images/profile.png" style="width: 5vw;">
+    </a>
+
+  </nav>
+
+
+  <div id="welcome-text" style="align-items: center;  justify-content: center;display: flex;">
+    <h1 id="wText" style="text-align: center;"> Delfinen Svømmeklub </h1>
+  </div>
+
+  <section>
+    <video autoplay muted loop id="myVideo" style="z-index: -55;">
+      <source src="assets/pixabay-swim.mp4" type="video/mp4">
+    </video>
+
+
+
 
     <section>
       <video autoplay muted loop id="myVideo">
@@ -50,6 +50,7 @@
 
       <div id="content"></div>
 
+
       <form id="profilForm" style="display: none">
         <select id="userType2">
           <option value="" disabled selected>Vælg din svømmekategori</option>
@@ -58,7 +59,16 @@
         </select>
         <button type="submit">Indsend resultat</button>
       </form>
+      
+
+    </div>
+    <div id="signupBtn" style="align-items: center;  justify-content: center;     display: flex;   ">
+      <button onclick="goToSignup()">Go to Signup Page</button>
+    </div>
+  </section>
+
     </section>
+
 
     <section>
       <div id="signIn">
@@ -76,40 +86,40 @@
       </div>
     </section>
 
+
+  <footer id="footer">
+    <div class="footer-section">
+      <h3>Af Nikolai Berthesen og Silas Sandager, DATAv2</h3>
+    </div>
+    <div class="footer-section">
+      <h3><b>Ophavsretserklæring for Delfin Svømmeklub:</b><br>
+        Alle rettigheder forbeholdes. <br>
+        Denne ophavsretserklæring gælder for alle elementer, der ejes af Delfin Svømmeklub,<br> herunder men ikke
+        begrænset til logoer, billeder, tekst, design og software.<br> Alle sådanne elementer er beskyttet af ophavsret
+        og andre gældende <br>love om intellektuel ejendomsret.</h3>
+    </div>
+    <div class="footer-section">
+      <h3>
+        Telefon: +45 49 42 06 66<br>
+        Addresse: Guldbergsgade 29N, 2200 København<br>
+        Email: Delfinen@Svømmeklub.dk<br>
+        CVR: XXXXXXXX
+      </h3>
+
     <div class="imageDiv">
       <img src="images/logo.png" alt="Logo" />
+
     </div>
 
-    <footer>
-      <div class="footer-section">
-        <h3>Af Nikolai Berthesen og Silas Sandager, DATAv2</h3>
-      </div>
-      <div class="footer-section">
-        <h3>
-          <b>Ophavsretserklæring for Delfin Svømmeklub:</b><br />
-          Alle rettigheder forbeholdes. <br />
-          Denne ophavsretserklæring gælder for alle elementer, der ejes af
-          Delfin Svømmeklub,<br />
-          herunder men ikke begrænset til logoer, billeder, tekst, design og
-          software.<br />
-          Alle sådanne elementer er beskyttet af ophavsret og andre gældende
-          <br />love om intellektuel ejendomsret.
-        </h3>
-      </div>
-      <div class="footer-section">
-        <h3>
-          Telefon: +45 49 42 06 66<br />
-          Addresse: Guldbergsgade 29N, 2200 København<br />
-          Email: Delfinen@Svømmeklub.dk<br />
-          CVR: XXXXXXXX
-        </h3>
-      </div>
-    </footer>
+
 
     <!-- Initialize Firebase in your app -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
+
+
+
 
     <script type="module" src="script.js?v=12"></script>
     <script>
@@ -119,3 +129,4 @@
     </script>
   </body>
 </html>
+

@@ -7,7 +7,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: -1;
+  z-index: -1555;
 }
 
 button {
@@ -68,8 +68,10 @@ footer {
   display: flex;
   justify-content: center;
   align-items: stretch;
-  box-shadow: 0px -8px 8px rgba(0, 0, 0, 0.35);
+  border: 1px solid #000000; 
+  transition: background-color 0.5s;
 }
+
 
 h1 {
   font-size: 70px;
@@ -146,7 +148,7 @@ body {
   height: 500px;
   margin-top: -250px;
   margin-left: -250px;
-  z-index: -1;
+  z-index: -7;
 
 }
 
@@ -182,16 +184,32 @@ body {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.pageFill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  right: 15%;
+  transition: height 0.5s, background-color 0.5s;
+  height: 0vh;
+  position: absolute;  /* Positioned absolutely */
+  top: 0%;  /* Positioned at the top */
+  width: 70vw;
+  z-index: -5; 
+}
 
-/* Navbar Styles */
 .navbar {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255);
   padding: 10px;
+  z-index: 5500;
+  border: 1px solid #000000; 
   height: 4vh;
 }
+
 
 .navbar a {
   margin: 0 10px;

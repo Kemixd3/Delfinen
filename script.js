@@ -50,7 +50,7 @@ function handleHashChange(uid, name, email, stage, token) {
 
     signIn.style.display = "none";
     content.innerHTML = `
-   
+    <button id="logoutButton">Log ud</button>
       <form id="profilForm2">
         <select id="userType2">
           <option value="" disabled selected>Vælg din svømmekategori</option>
@@ -203,7 +203,6 @@ window.onscroll = function () {
 //======Function to edit product data using PUT request========
 
 async function getProfile(uid) {
-  //console.log("PROF", uid)
   const response = await fetch(`${endpoint}/users/${uid}.json`, {
     method: "GET",
     headers: {
@@ -213,9 +212,12 @@ async function getProfile(uid) {
   });
 
   const userData = await response.json();
+
+  console.log(uid,"uid");
+  console.log(userData,"userData");
+
   if (userData != null) {
     const values = Object.values(userData);
-    //console.log(values)
     const objWithName = values.find((obj) => obj.hasOwnProperty("name"));
     //console.log(objWithName)
     return objWithName;
@@ -225,13 +227,20 @@ async function getProfile(uid) {
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     var signIn = document.getElementById("signIn");
-
+    
     var signupBtn = document.getElementById("signupBtn");
     signIn.style.display = "none";
     signupBtn.style.display = "none";
     // User is signed in, you can proceed with accessing the protected resources
     const uid = user.uid;
+
+    console.log(user, "user role");
     console.log("logging in");
+    
+    const header = document.getElementById('pageFill');
+    const footer = document.getElementById('footer');
+    header.style.height = '100vh';
+    footer.style.backgroundColor = 'white';
 
     var curUserElement = document.getElementById("curUser");
 

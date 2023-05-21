@@ -65,3 +65,29 @@ export async function getTotalMembershipFee(token) {
     return 0;
   }
 }
+
+export async function getAllResults(token) {
+  try {
+    const response = await fetch(`${endpoint}/results.json?auth=${token}`);
+
+    const usersResults = await response.json();
+    let totalMembershipFee = {};
+    // Loop through each user and accumulate the membership fees
+    for (const userId in usersResults) {
+      //const id = Object.keys(usersResults[userId])[0];
+
+      const user = usersResults[userId];
+      console.log(user);
+      if (user != null) {
+        totalMembershipFee = user || 0;
+
+        //console.log("works");
+      }
+    }
+    //console.log(totalMembershipFee);
+    return totalMembershipFee;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return "error in getting user results";
+  }
+}

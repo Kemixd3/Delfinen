@@ -1,6 +1,7 @@
 "use strict";
 import { calculateMembershipFee } from "/pay.js";
 import { getTotalMembershipFee } from "/pay.js";
+import { getAllResults } from "/pay.js";
 
 const endpoint =
   "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app";
@@ -46,7 +47,7 @@ function handleHashChange(uid, name, email, stage, token) {
   // Load the appropriate content based on the view
   if (view === "home") {
     welcome.innerHTML = "Delfinen profil side";
-    oceanheading.style.display = "none";
+
     signIn.style.display = "none";
     content.innerHTML = `
    
@@ -66,11 +67,11 @@ function handleHashChange(uid, name, email, stage, token) {
       </form>
     `;
 
-    const signupForm = document.getElementById("profilForm2");
-    signupForm.addEventListener("submit", (e) => {
+    const signupForm2 = document.getElementById("profilForm2");
+    signupForm2.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      date = new date();
+      var date = new Date();
       var options1 = {
         weekday: "long",
         year: "numeric",
@@ -82,9 +83,10 @@ function handleHashChange(uid, name, email, stage, token) {
         timeZone: "Europe/Copenhagen",
       };
       var formattedDate = date.toLocaleString("da-DK", options1);
+
       const data = {
-        swimmingdiscipline: signupForm.userType2.value,
-        tournament: signupForm.tournament.value,
+        swimmingdiscipline: signupForm2.userType2.value,
+        tournament: signupForm2.tournament.value,
         name: name,
         email: email,
         stage: stage,
@@ -108,7 +110,6 @@ function handleHashChange(uid, name, email, stage, token) {
           console.error("Error posting membership fee:", error);
         });
     });
-
   } else if (view === "about") {
     welcome.innerHTML = "Om os:";
   } else if (view === "user") {
@@ -288,7 +289,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       console.log("User data is missing or incomplete");
     }
 
-    if (userData.admin != null && userData.admin == true) {
+    if (userData && userData.admin != null && userData.admin == true) {
       user
         .getIdToken()
         .then(async function (token) {
@@ -304,7 +305,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
           console.error("Error obtaining authentication token:", error);
         });
     }
-    if (userData.cashier != null && userData.cashier == true) {
+    if (userData && userData.cashier != null && userData.cashier == true) {
       user
 
         .getIdToken()
@@ -321,8 +322,24 @@ firebase.auth().onAuthStateChanged(async function (user) {
           console.error("Error obtaining authentication token:", error);
         });
     }
-    if (userData.coach != null && userData.coach == true) {
+    if (userData && userData.coach != null && userData.coach == true) {
       console.log("coach signed in");
+
+      user
+
+        .getIdToken()
+        .then(async function (token) {
+          const totalMemberShopFees = await getAllResults(token);
+          console.log(totalMemberShopFees);
+          curUserElement.innerHTML +=
+            " <br>Resultater" +
+            JSON.stringify(totalMemberShopFees) +
+            "" +
+            "&nbsp;";
+        })
+        .catch(function (error) {
+          console.error("Error obtaining authentication token:", error);
+        });
     }
 
     user

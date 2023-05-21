@@ -23,12 +23,17 @@ var auth = firebase.auth();
 // Get the content container element
 var content = document.getElementById("content");
 
+var oceanheading = document.getElementById("welcome-text");
+oceanheading.style.display = "block";
+
 var signIn = document.getElementById("signIn");
 signIn.style.display = "block";
+
 profilForm.style.display = "none";
 // Function to handle the hashchange event
-function handleHashChange() {
+function handleHashChange(uid, name, email, stage, token) {
   // Get the hash value from the URL
+
   var hash = window.location.hash;
 
   // Remove the '#' character from the hash
@@ -39,21 +44,68 @@ function handleHashChange() {
 
   // Load the appropriate content based on the view
   if (view === "home") {
+    oceanheading.style.display = "none";
     signIn.style.display = "none";
     content.innerHTML = `
-    <h1 class="center-text">Delfinen profil side</h1>
-    <form id="profilForm">
-      <select id="userType2">
-        <option value="" disabled selected>Vælg din svømmekategori</option>
-        <option value="exerciser">Motionist</option>
-        <option value="competition">Konkurrencesvømmer</option>
-      </select>
-      <button type="submit">Indsend resultat</button>
-    </form>
-  `;
-  } else if (view === "news") {
-    content.innerHTML =
-      '<h1 class="center-text">Latest News</h1><p>Here are the latest news articles...</p>';
+      <h1 class="center-text">Delfinen profil side</h1>
+      <form id="profilForm2">
+        <select id="userType2">
+          <option value="" disabled selected>Vælg din svømmekategori</option>
+          <option value="exerciser">Butterfly</option>
+          <option value="Crawl">Crawl</option>
+          <option value="Backcrawl">Rygcrawl </option>
+          <option value="breaststroke">Brystsvømning</option>
+        </select>
+        <br>
+        <input type="tournament" id="tournament" name="tournament" placeholder="Skriv navnet på konkurrencen" />
+        <br>
+        <input type="number" id="time" name="time" placeholder="Skriv din tid i sekunder" />
+        <button type="submit">Indsend resultat</button>
+      </form>
+    `;
+
+    const signupForm = document.getElementById("profilForm2");
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      date = new date();
+      var options1 = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        timeZone: "Europe/Copenhagen",
+      };
+      var formattedDate = date.toLocaleString("da-DK", options1);
+      const data = {
+        swimmingdiscipline: signupForm.userType2.value,
+        tournament: signupForm.tournament.value,
+        name: name,
+        email: email,
+        stage: stage,
+        uid: uid,
+        time: time,
+        date: formattedDate,
+      };
+
+      fetch(`${endpoint}/results.json?auth=${token}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Membership fee posted successfully:", data);
+        })
+        .catch((error) => {
+          console.error("Error posting membership fee:", error);
+        });
+    });
   } else if (view === "about") {
     content.innerHTML =
       '<h1 class="center-text">About Us</h1><p>Learn more about our company...</p>';
@@ -69,7 +121,6 @@ function handleHashChange() {
 window.addEventListener("hashchange", handleHashChange);
 
 // Initial page load - call the handleHashChange function
-handleHashChange();
 
 var signInButton = document.getElementById("sign-in-button");
 signInButton.addEventListener("click", function (event) {
@@ -125,6 +176,7 @@ signInButton.addEventListener("click", function (event) {
 function goToSignup() {
   window.location.href = "signup.html";
 }
+
 function goToMain() {
   window.location.href = "index.html";
 }
@@ -255,6 +307,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
     }
     if (userData.cashier != null && userData.cashier == true) {
       user
+
         .getIdToken()
         .then(async function (token) {
           const totalMemberShopFees = await getTotalMembershipFee(token);
@@ -272,6 +325,22 @@ firebase.auth().onAuthStateChanged(async function (user) {
     if (userData.coach != null && userData.coach == true) {
       console.log("coach signed in");
     }
+
+    user
+      .getIdToken()
+      .then(async function (token) {
+        const totalMemberShopFees = await handleHashChange(
+          uid,
+          userData.name,
+          userData.email,
+          userData.stage,
+
+          token
+        );
+      })
+      .catch(function (error) {
+        console.error("Error obtaining authentication token:", error);
+      });
 
     var logoutButton = document.getElementById("logoutButton");
     logoutButton.style.display = "block";

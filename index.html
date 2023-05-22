@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html lang="dk">
-
-
-
-
 <head>
   <title>Svømmeklubben</title>
   <meta charset="UTF-8" />
@@ -12,43 +8,25 @@
   <link rel="icon" type="image/x-icon" href="/images/logo.png">
   <link rel="stylesheet" href="/style.css" />
 </head>
-
-
 <body>
   <div id="pageFill" class="pageFill"></div>
-
   <nav id="navBar" class="navbar">
     <a href="#user" class="view-link">Forside</a>
     <a href="#about" class="view-link">Om os</a>
-
-    <a href="#home"
-      style=" background: transparent; right: 2%; position: absolute; display: inline-block; padding: 0;border: none; background: none; text-decoration: none;">
+    <a href="#home" style="background: transparent; right: 2%; position: absolute; display: inline-block; padding: 0;border: none; background: none; text-decoration: none;">
       <img src="images/profile.png" style="width: 5vw;">
     </a>
-
   </nav>
-
-
-  <div id="welcome-text" style="align-items: center;  justify-content: center;display: flex;">
-    <h1 id="wText" style="text-align: center;"> Delfinen Svømmeklub </h1>
+  <div id="welcome-text" style="align-items: center; justify-content: center; display: flex;">
+    <h1 id="wText" style="text-align: center;">Delfinen Svømmeklub</h1>
   </div>
-
   <section>
     <video autoplay muted loop id="myVideo" style="z-index: -55;">
       <source src="assets/pixabay-swim.mp4" type="video/mp4">
     </video>
-
     <section>
-      <h1 style="font-size: 1.5vw" id="curUser"></h1>
-      <button id="logoutButton" class="login-out-btn hidden">Log ud</button>
-
-      <button id="logoutButton" class="login-out-btn hidden">Log ud</button> 
-      <div id="content">
-
-        
-
-      </div>
-
+      <h1 style="font-size: 1.5vw" id="curUser" style="display: block;"></h1>
+      <div id="content"></div>
       <form id="profilForm" style="display: none">
         <select id="userType2">
           <option value="" disabled selected>Vælg din svømmekategori</option>
@@ -57,19 +35,11 @@
         </select>
         <button type="submit">Indsend resultat</button>
       </form>
-
-
-      </div>
-
-      <div id="signupBtn" style="align-items: center;  justify-content: center;     display: flex;   ">
+      <div id="signupBtn" style="align-items: center; justify-content: center; display: flex;">
         <button onclick="goToSignup()">Go to Signup Page</button>
       </div>
-
     </section>
-
   </section>
-
-
   <section>
     <div id="signIn">
       <form>
@@ -78,11 +48,8 @@
         <button type="submit" id="sign-in-button">Sign In</button>
       </form>
     </div>
-    <div id="signupBtn" style="align-items: center; justify-content: center; display: flex">
-    </div>
+    <div id="signupBtn" style="align-items: center; justify-content: center; display: flex;"></div>
   </section>
-
-
   <footer id="footer">
     <div class="footer-section">
       <h3>Af Nikolai Berthesen og Silas Sandager, DATAv2</h3>
@@ -103,22 +70,12 @@
       </h3>
     </div>
   </footer>
-
   <div class="imageDiv">
     <img src="images/logo.png" alt="Logo" />
-
   </div>
-
-
-
-  <!-- Initialize Firebase in your app -->
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
-
-
-
-
   <script type="module" src="script.js?v=12"></script>
   <script>
     function goToSignup() {
@@ -126,5 +83,4 @@
     }
   </script>
 </body>
-
 </html>

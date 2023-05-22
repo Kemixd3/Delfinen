@@ -3,7 +3,7 @@ const endpoint =
 
 export function calculateMembershipFee(age, active, ageGroup, uid, id) {
   let membershipFee = 0;
-  console.log(age, active, ageGroup);
+  //console.log(age, active, ageGroup);
   if (active) {
     if (ageGroup === "junior" && age < 18) {
       membershipFee = 1000;
@@ -53,12 +53,12 @@ export async function getTotalMembershipFee(token) {
 
       if (user != null) {
         const membershipFee = user.membershipFee || 0;
-        console.log(membershipFee);
+        //console.log(membershipFee);
         totalMembershipFee += membershipFee;
       }
     }
 
-    console.log("Total Membership Fee:", totalMembershipFee);
+    //console.log("Total Membership Fee:", totalMembershipFee);
     return totalMembershipFee;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -71,20 +71,18 @@ export async function getAllResults(token) {
     const response = await fetch(`${endpoint}/results.json?auth=${token}`);
 
     const usersResults = await response.json();
-    let totalMembershipFee = {};
+    let totalMembershipFee = [];
     // Loop through each user and accumulate the membership fees
     for (const userId in usersResults) {
       //const id = Object.keys(usersResults[userId])[0];
 
       const user = usersResults[userId];
-      console.log(user);
-      if (user != null) {
-        totalMembershipFee = user || 0;
 
-        //console.log("works");
+      if (user != null) {
+        totalMembershipFee.push(user);
       }
     }
-    //console.log(totalMembershipFee);
+
     return totalMembershipFee;
   } catch (error) {
     console.error("Error fetching users:", error);

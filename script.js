@@ -32,8 +32,10 @@ signIn.style.display = "block";
 profilForm.style.display = "none";
 // Function to handle the hashchange event
 let title;
+let totalFee;
+let allRes;
 
-function handleHashChange(uid, name, email, stage, token) {
+async function handleHashChange(uid, name, email, stage, token) {
   const hash = window.location.hash;
   const welcome = document.getElementById("wText");
   const view = hash.substring(1);
@@ -60,13 +62,38 @@ function handleHashChange(uid, name, email, stage, token) {
         <input type="number" id="time" name="time" placeholder="Skriv din tid i sekunder" />
         <button type="submit">Indsend resultat</button>
       </form>
+      <table id='ARTable'> </table>
     `;
+    console.log(title, "title");
+    console.log(allRes, "allres");
 
-    if (title == "Cashier" || title == "Admin"){
-      content.innerHTML += `<p>Samlet betaling: ${getTotalMembershipFee}</p>`;
-    } 
-    if  (title == "Coach" || title == "Admin"){
-      content.innerHTML += `<p>Admin: ${getAllResults}</p>`;
+    if (title == "Cashier" || title == "Admin") {
+      content.innerHTML += `<div class="fees"><p>Samlet betaling: ${totalFee}</p> </div><br>`;
+    }
+    if (title == "Coach" || title == "Admin") {
+
+      var table = document.getElementById("ARTable");
+
+      // Create table header
+      var headerRow = table.insertRow();
+      for (var key in allRes[0]) {
+        var headerCell = document.createElement("th");
+        headerCell.textContent = key;
+        headerCell.style.border = "1px solid #ddd";
+        headerCell.style.padding = "8px";
+        headerRow.appendChild(headerCell);
+      }
+      
+      // Create table rows and cells
+      allRes.forEach(function (item) {
+        var row = table.insertRow();
+        for (var key in item) {
+          var cell = row.insertCell();
+          cell.textContent = item[key];
+          cell.style.border = "1px solid #ddd";
+          cell.style.padding = "8px";
+        }
+      });
     }
 
     const signupForm2 = document.getElementById("profilForm2");
@@ -117,8 +144,7 @@ function handleHashChange(uid, name, email, stage, token) {
     <h1>Nyheder:</h1>
     <img src="newspaper-image.jpg" alt="Newspaper Image">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim convallis tempus.</p>
-  </div>`;
-
+    </div>`;
   }
 }
 
@@ -203,15 +229,19 @@ async function getProfile(uid) {
     return objWithName;
   }
 }
-
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
+    const token = await user.getIdToken();
+    totalFee = await getTotalMembershipFee(token);
+    allRes = await getAllResults(token);
+
     const signIn = document.getElementById("signIn");
     const signupBtn = document.getElementById("signupBtn");
     signIn.style.display = "none";
     signupBtn.style.display = "none";
     const uid = user.uid;
     console.log("logging in");
+
 
     var changeColor = document.getElementById("footer");
     var changeNav = document.getElementById("navBar");
@@ -220,7 +250,9 @@ firebase.auth().onAuthStateChanged(async function (user) {
 
     const curUserElement = document.getElementById("curUser");
     const userData = await getProfile(uid);
+
     console.log("id", userData);
+    title = userData.name;
 
     if (userData && userData.age != null && userData.subscription != null && userData.stage != null) {
       curUserElement.innerHTML = `Brugernavn: ${userData.name || "none"}&nbsp;</br>Mail: ${userData.email || "none"}`;
@@ -251,6 +283,9 @@ firebase.auth().onAuthStateChanged(async function (user) {
     } catch (error) {
       console.error("Error obtaining authentication token:", error);
     }
+
+
+
 
     const logoutButton = document.getElementById("logoutButton");
     logoutButton.addEventListener("click", function () {

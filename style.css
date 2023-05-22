@@ -257,3 +257,19 @@ body {
   /* Add any necessary styling for the form */
 }
 
+table{
+  display: flex;
+
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.fees{
+  display: flex;
+  font-size: 1vw;
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    background-color: rgba(255, 255, 255, 0.5);
+  
+}

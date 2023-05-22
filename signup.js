@@ -122,3 +122,62 @@ signupForm.addEventListener("submit", (e) => {
 function goToMain() {
   window.location.href = "index.html";
 }
+
+const FormFee = document.getElementById("FormFee");
+// Add event listener to the form submission
+signupForm.addEventListener("change", function (event) {
+  event.preventDefault(); // Prevent form submission
+
+  // Get user input values
+  const age = calculateAge(document.getElementById("birthdate").value);
+  const active = document.getElementById("subscription").value === "active";
+  const ageGroup = getAgeGroup(age);
+
+  // Calculate membership fee
+  const membershipFee = calculateMembershipFee(age, active, ageGroup);
+
+  // Display the membership fee
+  //console.log("Expected Membership Fee:", membershipFee);
+  FormFee.innerHTML = ` <br> Prisen for dit abbonoment: ${membershipFee}`;
+});
+
+// Function to calculate age based on birthdate input
+function calculateAge(birthdate) {
+  const today = new Date();
+  const birthdateObj = new Date(birthdate);
+  let age = today.getFullYear() - birthdateObj.getFullYear();
+  const monthDiff = today.getMonth() - birthdateObj.getMonth();
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthdateObj.getDate())
+  ) {
+    age--;
+  }
+  return age;
+}
+
+// Function to determine the age group based on age
+function getAgeGroup(age) {
+  if (age < 18) {
+    return "junior";
+  } else {
+    return "senior";
+  }
+}
+
+// Function to calculate the membership fee
+function calculateMembershipFee(age, active, ageGroup) {
+  let membershipFee = 0;
+  if (active) {
+    if (ageGroup === "junior") {
+      membershipFee = 1000;
+    } else if (ageGroup === "senior" && age < 60) {
+      membershipFee = 1600;
+    } else if (ageGroup === "senior" && age >= 60) {
+      membershipFee = 1600 * 0.75; // 25% discount for members over 60
+    }
+  } else {
+    membershipFee = 500; // Passive membership fee
+  }
+  return membershipFee;
+}

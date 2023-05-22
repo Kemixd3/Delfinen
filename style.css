@@ -14,7 +14,7 @@ button {
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -51,7 +51,7 @@ select {
 }
 
 button[type="submit"] {
-  background-color: #4285F4;
+  background-color: #4285f4;
 }
 
 #signup-message {
@@ -78,8 +78,8 @@ h1 {
   font-size: 70px;
   font-weight: 600;
   color: lightblue;
-  text-shadow: -3px 3px #000000, 2px 3px #000000, -2px -2px #000000, 3px 3px #000000;
-
+  text-shadow: -3px 3px #000000, 2px 3px #000000, -2px -2px #000000,
+    3px 3px #000000;
 }
 
 footer .footer-section {
@@ -150,7 +150,6 @@ body {
   margin-top: -250px;
   margin-left: -250px;
   z-index: -7;
-
 }
 
 .profileButton {
@@ -161,7 +160,6 @@ body {
   background-repeat: no-repeat;
   left: 50%;
   background: url("images/profile.png");
-
 }
 
 .center-text {
@@ -172,7 +170,7 @@ body {
 }
 
 .cool-text {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   font-size: 24px;
   color: black;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -195,7 +193,6 @@ body {
   height: 4vh;
 }
 
-
 .navbar a {
   margin: 0 10px;
   text-decoration: none;
@@ -204,7 +201,7 @@ body {
 }
 
 .navbar a:hover {
-  background-color: #4285F4;
+  background-color: #4285f4;
 }
 
 .navbar button {
@@ -217,5 +214,21 @@ body {
 }
 
 .navbar button:hover {
-  background-color: #4285F4;
+  background-color: #4285f4;
+}
+
+.row {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+}
+
+#formFeeContainer {
+  position: absolute;
+  right: 150px; /* Adjust the distance from the right edge */
+}
+
+#signupForm {
+  position: relative;
+  /* Add any necessary styling for the form */
 }

@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="./style.css" />
-    <link rel="icon" type="image/x-icon" href="/images/logo.png">
-
+    <link rel="icon" type="image/x-icon" href="/images/logo.png" />
   </head>
 
   <body>
@@ -33,47 +32,54 @@
     </div>
     <h1 style="font-size: 1.5vw" id="curUser"></h1>
 
-    <form id="signupForm">
-      <input type="text" placeholder="Email" id="email" required />
-      <input
-        type="password"
-        placeholder="Kode"
-        id="password"
-        minlength="6"
-        required
-      />
-      <input placeholder="Navn" type="text" id="name" required />
+    <div class="row">
+      <div class="col-md-3">
+        <form id="signupForm">
+          <input type="text" placeholder="Email" id="email" required />
+          <input
+            type="password"
+            placeholder="Kode"
+            id="password"
+            minlength="6"
+            required
+          />
+          <input placeholder="Navn" type="text" id="name" required />
 
-      <input placeholder="Telefonnummer" type="text" id="phone" required />
+          <input placeholder="Telefonnummer" type="text" id="phone" required />
 
-      <select id="userType">
-        <option value="" disabled selected>Vælg din svømmekategori</option>
-        <option value="exerciser">Motionist</option>
-        <option value="competition">Konkurrencesvømmer</option>
-      </select>
+          <select id="userType">
+            <option value="" disabled selected>Vælg din svømmekategori</option>
+            <option value="exerciser">Motionist</option>
+            <option value="competition">Konkurrencesvømmer</option>
+          </select>
 
-      <select id="gender">
-        <option value="" disabled selected>Vælg dit køn</option>
-        <option value="male">Mand</option>
-        <option value="female">Kvinde</option>
-        <option value="other">Anden</option>
-      </select>
-      <input type="date" id="birthdate" name="birthdate" />
-      <select id="subscription">
-        <option value="" disabled selected>Vælg Abbonement</option>
-        <option value="active">Aktiv</option>
-        <option value="passive">Passiv</option>
-      </select>
-      <button type="submit">Sign up</button>
-    </form>
+          <select id="gender">
+            <option value="" disabled selected>Vælg dit køn</option>
+            <option value="male">Mand</option>
+            <option value="female">Kvinde</option>
+            <option value="other">Anden</option>
+          </select>
+          <input type="date" id="birthdate" name="birthdate" required />
+          <select id="subscription">
+            <option value="" disabled selected>Vælg Abbonement</option>
+            <option value="active">Aktiv</option>
+            <option value="passive">Passiv</option>
+          </select>
+          <button type="submit">Sign up</button>
+        </form>
+      </div>
 
-    <div id="signup-message"></div>
+      <div class="col" id="formFeeContainer">
+        <h1 id="FormFee"></h1>
+      </div>
+    </div>
 
     <div style="align-items: center; justify-content: center; display: flex">
       <button onclick="goToMain()">Go to SignIn Page</button>
     </div>
+    <div id="signup-message"></div>
 
-    <div class="pageFill"id="pageFill"></div>
+    <div class="pageFill" id="pageFill"></div>
     <div id="signup-message"></div>
 
     <footer id="footer">

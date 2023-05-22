@@ -31,6 +31,7 @@ signIn.style.display = "block";
 
 profilForm.style.display = "none";
 // Function to handle the hashchange event
+let title;
 
 function handleHashChange(uid, name, email, stage, token) {
   const hash = window.location.hash;
@@ -60,6 +61,13 @@ function handleHashChange(uid, name, email, stage, token) {
         <button type="submit">Indsend resultat</button>
       </form>
     `;
+
+    if (title == "Cashier" || title == "Admin"){
+      content.innerHTML += `<p>Samlet betaling: ${getTotalMembershipFee}</p>`;
+    } 
+    if  (title == "Coach" || title == "Admin"){
+      content.innerHTML += `<p>Admin: ${getAllResults}</p>`;
+    }
 
     const signupForm2 = document.getElementById("profilForm2");
     signupForm2.addEventListener("submit", async (e) => {
@@ -180,9 +188,11 @@ async function getProfile(uid) {
   });
 
   const userData = await response.json();
+
   if (userData != null) {
     const values = Object.values(userData);
-    //console.log(values)
+    title = values[0].name;
+
     const objWithName = values.find((obj) => obj.hasOwnProperty("name"));
     //console.log(objWithName)
     return objWithName;
@@ -229,22 +239,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
       curUserElement.innerHTML = `Brugernavn: none&nbsp;</br>Mail: ${user.email || "none"}`;
       console.log("User data is missing or incomplete");
     }
-
-    const handleUser = async (role, message, action) => {
-      if (userData && userData[role] != null && userData[role] === true) {
-        try {
-          const token = await user.getIdToken();
-          await action(token);
-          curUserElement.innerHTML += message;
-        } catch (error) {
-          console.error("Error obtaining authentication token:", error);
-        }
-      }
-    };
-
-    handleUser("admin", " <br>Samlet indkomst for alle aktive abbonomenter: ", getTotalMembershipFee);
-    handleUser("cashier", " <br>Samlet indkomst for alle aktive abbonomenter: ", getTotalMembershipFee);
-    handleUser("coach", " <br>Resultater", getAllResults);
 
     try {
       const token = await user.getIdToken();

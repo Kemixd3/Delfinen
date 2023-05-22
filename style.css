@@ -184,7 +184,7 @@ body {
 
 .navbar {
   display: flex;
-  transition: background-color 0.5s;
+  transition: background-color 0.5s, height 0.5s;
 
   align-items: center;
   justify-content: center;

@@ -45,7 +45,6 @@ function handleHashChange(uid, name, email, stage, token) {
     text.style.display = "block";
     signIn.style.display = "none";
     content.innerHTML = `
-    <button onclick="logOutB()" id="logoutButton" class="login-out-btn hidden">Log ud</button>
       <form id="profilForm2">
         <select id="userType2">
           <option value="" disabled selected>Vælg din svømmekategori</option>
@@ -254,18 +253,21 @@ firebase.auth().onAuthStateChanged(async function (user) {
       console.error("Error obtaining authentication token:", error);
     }
 
+    const logoutButton = document.getElementById("logoutButton");
+    logoutButton.addEventListener("click", function () {
+      firebase.auth().signOut().then(function () {
+        location.reload();
+        console.log("User logged out successfully.");
+      }).catch(function (error) {
+        console.log("Error logging out:", error);
+      });
+    });
+
+    // Make the API call here
+    // ...
   } else {
     console.log("logged out");
     const logoutButton = document.getElementById("logoutButton");
     logoutButton.style.display = "none";
   }
 });
-
-function logOutB(){
-  firebase.auth().signOut().then(function () {
-    location.reload();
-    console.log("User logged out successfully.");
-  }).catch(function (error) {
-    console.log("Error logging out:", error);
-  });
-}

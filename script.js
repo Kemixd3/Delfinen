@@ -31,6 +31,7 @@ signIn.style.display = "block";
 
 profilForm.style.display = "none";
 // Function to handle the hashchange event
+let title;
 
 function handleHashChange(uid, name, email, stage, token) {
   const hash = window.location.hash;
@@ -45,7 +46,6 @@ function handleHashChange(uid, name, email, stage, token) {
     text.style.display = "block";
     signIn.style.display = "none";
     content.innerHTML = `
-    <button onclick="logOutB()" id="logoutButton" class="login-out-btn hidden">Log ud</button>
       <form id="profilForm2">
         <select id="userType2">
           <option value="" disabled selected>Vælg din svømmekategori</option>
@@ -61,6 +61,13 @@ function handleHashChange(uid, name, email, stage, token) {
         <button type="submit">Indsend resultat</button>
       </form>
     `;
+
+    if (title == "Cashier" || title == "Admin"){
+      content.innerHTML += `<p>Samlet betaling: ${getTotalMembershipFee}</p>`;
+    } 
+    if  (title == "Coach" || title == "Admin"){
+      content.innerHTML += `<p>Admin: ${getAllResults}</p>`;
+    }
 
     const signupForm2 = document.getElementById("profilForm2");
     signupForm2.addEventListener("submit", async (e) => {
@@ -105,7 +112,13 @@ function handleHashChange(uid, name, email, stage, token) {
   } else if (view === "about") {
     welcome.innerHTML = "Om os:";
   } else if (view === "user") {
-    welcome.innerHTML = "Delfinen Svømmegruppe:";
+    welcome.innerHTML = "Delfinen Svømmegruppens forside:";
+    content.innerHTML = `<div class="newspaper">
+    <h1>Nyheder:</h1>
+    <img src="newspaper-image.jpg" alt="Newspaper Image">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim convallis tempus.</p>
+  </div>`;
+
   }
 }
 
@@ -133,7 +146,6 @@ const displayUserInfo = async (user) => {
 
 function handleSignIn(event) {
   event.preventDefault();
-
   const email = emailInput.value;
   const password = passwordInput.value;
 
@@ -181,9 +193,11 @@ async function getProfile(uid) {
   });
 
   const userData = await response.json();
+
   if (userData != null) {
     const values = Object.values(userData);
-    //console.log(values)
+    title = values[0].name;
+
     const objWithName = values.find((obj) => obj.hasOwnProperty("name"));
     //console.log(objWithName)
     return objWithName;
@@ -231,22 +245,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
       console.log("User data is missing or incomplete");
     }
 
-    const handleUser = async (role, message, action) => {
-      if (userData && userData[role] != null && userData[role] === true) {
-        try {
-          const token = await user.getIdToken();
-          await action(token);
-          curUserElement.innerHTML += message;
-        } catch (error) {
-          console.error("Error obtaining authentication token:", error);
-        }
-      }
-    };
-
-    handleUser("admin", " <br>Samlet indkomst for alle aktive abbonomenter: ", getTotalMembershipFee);
-    handleUser("cashier", " <br>Samlet indkomst for alle aktive abbonomenter: ", getTotalMembershipFee);
-    handleUser("coach", " <br>Resultater", getAllResults);
-
     try {
       const token = await user.getIdToken();
       handleHashChange(uid, userData.name, userData.email, userData.stage, token);
@@ -254,18 +252,21 @@ firebase.auth().onAuthStateChanged(async function (user) {
       console.error("Error obtaining authentication token:", error);
     }
 
+    const logoutButton = document.getElementById("logoutButton");
+    logoutButton.addEventListener("click", function () {
+      firebase.auth().signOut().then(function () {
+        location.reload();
+        console.log("User logged out successfully.");
+      }).catch(function (error) {
+        console.log("Error logging out:", error);
+      });
+    });
+
+    // Make the API call here
+    // ...
   } else {
     console.log("logged out");
     const logoutButton = document.getElementById("logoutButton");
     logoutButton.style.display = "none";
   }
 });
-
-function logOutB(){
-  firebase.auth().signOut().then(function () {
-    location.reload();
-    console.log("User logged out successfully.");
-  }).catch(function (error) {
-    console.log("Error logging out:", error);
-  });
-}

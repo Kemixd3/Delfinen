@@ -19,7 +19,6 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-var auth = firebase.auth();
 
 // Get the content container element
 var content = document.getElementById("content");
@@ -32,25 +31,20 @@ signIn.style.display = "block";
 
 profilForm.style.display = "none";
 // Function to handle the hashchange event
+
 function handleHashChange(uid, name, email, stage, token) {
-  // Get the hash value from the URL
-
-  var hash = window.location.hash;
-  var welcome = document.getElementById("wText");
-
-  // Remove the '#' character from the hash
-  var view = hash.substring(1);
-
-  // Clear the content container
+  const hash = window.location.hash;
+  const welcome = document.getElementById("wText");
+  const view = hash.substring(1);
   content.innerHTML = "";
+  const text = document.getElementById("curUser");
+  text.style.display = "none";
 
-  // Load the appropriate content based on the view
   if (view === "home") {
     welcome.innerHTML = "Delfinen profil side";
-
+    text.style.display = "block";
     signIn.style.display = "none";
     content.innerHTML = `
-   
       <form id="profilForm2">
         <select id="userType2">
           <option value="" disabled selected>Vælg din svømmekategori</option>
@@ -60,7 +54,7 @@ function handleHashChange(uid, name, email, stage, token) {
           <option value="breaststroke">Brystsvømning</option>
         </select>
         <br>
-        <input type="tournament" id="tournament" name="tournament" placeholder="Skriv navnet på konkurrencen" />
+        <input type="text" id="tournament" name="tournament" placeholder="Skriv navnet på konkurrencen" />
         <br>
         <input type="number" id="time" name="time" placeholder="Skriv din tid i sekunder" />
         <button type="submit">Indsend resultat</button>
@@ -68,11 +62,10 @@ function handleHashChange(uid, name, email, stage, token) {
     `;
 
     const signupForm2 = document.getElementById("profilForm2");
-    signupForm2.addEventListener("submit", (e) => {
+    signupForm2.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      var date = new Date();
-      var options1 = {
+      const date = new Date().toLocaleString("da-DK", {
         weekday: "long",
         year: "numeric",
         month: "long",
@@ -81,34 +74,32 @@ function handleHashChange(uid, name, email, stage, token) {
         minute: "numeric",
         second: "numeric",
         timeZone: "Europe/Copenhagen",
-      };
-      var formattedDate = date.toLocaleString("da-DK", options1);
+      });
 
       const data = {
         swimmingdiscipline: signupForm2.userType2.value,
         tournament: signupForm2.tournament.value,
-        name: name,
-        email: email,
-        stage: stage,
-        uid: uid,
-        time: time,
-        date: formattedDate,
+        name,
+        email,
+        stage,
+        uid,
+        time: signupForm2.time.value,
+        date,
       };
 
-      fetch(`${endpoint}/results.json?auth=${token}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Membership fee posted successfully:", data);
-        })
-        .catch((error) => {
-          console.error("Error posting membership fee:", error);
+      try {
+        const response = await fetch(`${endpoint}/results.json?auth=${token}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         });
+        const responseData = await response.json();
+        console.log("Membership fee posted successfully:", responseData);
+      } catch (error) {
+        console.error("Error posting membership fee:", error);
+      }
     });
   } else if (view === "about") {
     welcome.innerHTML = "Om os:";
@@ -120,58 +111,43 @@ function handleHashChange(uid, name, email, stage, token) {
 // Add event listener for hashchange event
 window.addEventListener("hashchange", handleHashChange);
 
-// Initial page load - call the handleHashChange function
-
+// Cache frequently used elements
 var signInButton = document.getElementById("sign-in-button");
-signInButton.addEventListener("click", function (event) {
+var emailInput = document.getElementById("email2");
+var passwordInput = document.getElementById("password2");
+var curUserElement = document.getElementById("curUser");
+var signIn = document.getElementById("signIn");
+var signupBtn = document.getElementById("signupBtn");
+
+// Extract the logic into separate functions
+const signInWithEmailAndPassword = (email, password) => firebase.auth().signInWithEmailAndPassword(email, password);
+
+
+const displayUserInfo = async (user) => {
+  const { uid } = user;
+  const userData = await getProfile(uid);
+  const name = userData?.name || "none";
+  curUserElement.innerHTML = `Brugernavn: ${name}&nbsp;</br>Mail: ${user.email || "none"}`;
+};
+
+function handleSignIn(event) {
   event.preventDefault();
-  var email = document.getElementById("email2").value;
-  var password = document.getElementById("password2").value;
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(async function (userCredential) {
-      // User signed in successfully
-      var user = userCredential.user;
-      const uid = user.uid;
-      var curUserElement = document.getElementById("curUser");
 
-      // Append the variable to the existing string
-      //curUserElement.innerHTML = "Bruger: " + user.email + "&nbsp;";
+  const email = emailInput.value;
+  const password = passwordInput.value;
 
-      console.log("Signed in as " + user.email);
-
-      const userData = await getProfile(uid);
-
-      if (userData != null && userData.name != null) {
-        curUserElement.innerHTML =
-          "Brugernavn: " +
-          userData.name +
-          "&nbsp;" +
-          "</br>" +
-          "Mail: " +
-          (user.email || "none");
-      } else {
-        curUserElement.innerHTML =
-          "Brugernavn: " +
-          (userData.name || "none") +
-          "&nbsp;" +
-          "</br>" +
-          "Mail: " +
-          (user.email || "none");
-      }
-      //const data = JSON.parse(userData);
-      var signIn = document.getElementById("signIn");
-
-      var signupBtn = document.getElementById("signupBtn");
+  signInWithEmailAndPassword(email, password)
+    .then(({ user }) => {
+      console.log(`Signed in as ${user.email}`);
+      displayUserInfo(user);
       signIn.style.display = "none";
       signupBtn.style.display = "none";
     })
-    .catch(function (error) {
-      // Handle sign-in error
-      console.error(error);
-    });
-});
+    .catch(console.error);
+}
+
+// Attach the optimized event listener
+signInButton.addEventListener("click", handleSignIn);
 
 function goToSignup() {
   window.location.href = "signup.html";
@@ -192,15 +168,6 @@ window.onscroll = function () {
   prevScrollpos = currentScrollPos;
 };
 
-//Initialize Firebase realtime database
-//window.addEventListener("load", init);
-
-//========Function to display the products using FETCH GET request=======
-//async function init() {
-
-//}
-
-//======Function to edit product data using PUT request========
 
 async function getProfile(uid) {
   //console.log("PROF", uid)
@@ -224,33 +191,24 @@ async function getProfile(uid) {
 
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    var signIn = document.getElementById("signIn");
-
-    var signupBtn = document.getElementById("signupBtn");
+    const signIn = document.getElementById("signIn");
+    const signupBtn = document.getElementById("signupBtn");
     signIn.style.display = "none";
     signupBtn.style.display = "none";
-    // User is signed in, you can proceed with accessing the protected resources
     const uid = user.uid;
     console.log("logging in");
 
-    var curUserElement = document.getElementById("curUser");
+    var changeColor = document.getElementById("footer");
+    var changeNav = document.getElementById("navBar");
+    changeColor.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+    changeNav.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
 
+    const curUserElement = document.getElementById("curUser");
     const userData = await getProfile(uid);
     console.log("id", userData);
 
-    if (
-      userData &&
-      userData.age != null &&
-      userData.subscription != null &&
-      userData.stage != null
-    ) {
-      curUserElement.innerHTML =
-        "Brugernavn: " +
-        (userData.name || "none") +
-        "&nbsp;" +
-        "</br>" +
-        "Mail: " +
-        (userData.email || "none");
+    if (userData && userData.age != null && userData.subscription != null && userData.stage != null) {
+      curUserElement.innerHTML = `Brugernavn: ${userData.name || "none"}&nbsp;</br>Mail: ${userData.email || "none"}`;
 
       const response = await fetch(`${endpoint}/users/${uid}.json`, {
         method: "GET",
@@ -264,128 +222,52 @@ firebase.auth().onAuthStateChanged(async function (user) {
       const id = Object.keys(userdate2)[0];
       console.log(id);
 
-      const subscriptionPrice = calculateMembershipFee(
-        userData.age,
-        userData.subscription,
-        userData.stage,
-        uid,
-        id
-      );
-      curUserElement.innerHTML +=
-        " <br> Til betaling i næste periode: " +
-        subscriptionPrice +
-        " DKK" +
-        "&nbsp;";
+      const subscriptionPrice = calculateMembershipFee(userData.age, userData.subscription, userData.stage, uid, id);
+      curUserElement.innerHTML += ` <br> Til betaling i næste periode: ${subscriptionPrice} DKK&nbsp;`;
       console.log(user.uid);
     } else {
-      curUserElement.innerHTML =
-        "Brugernavn: " +
-        "none" +
-        "&nbsp;" +
-        "</br>" +
-        "Mail: " +
-        (user.email || "none");
-      // Handle the case when userData is undefined or missing required properties
+      curUserElement.innerHTML = `Brugernavn: none&nbsp;</br>Mail: ${user.email || "none"}`;
       console.log("User data is missing or incomplete");
     }
 
-    if (userData && userData.admin != null && userData.admin == true) {
-      user
-        .getIdToken()
-        .then(async function (token) {
-          const totalMemberShopFees = await getTotalMembershipFee(token);
-          curUserElement.innerHTML +=
-            " <br>Samlet indkomst for alle aktive abbonomenter: " +
-            totalMemberShopFees +
-            " DKK" +
-            "&nbsp;";
-          console.log("Admin signed in");
-        })
-        .catch(function (error) {
+    const handleUser = async (role, message, action) => {
+      if (userData && userData[role] != null && userData[role] === true) {
+        try {
+          const token = await user.getIdToken();
+          await action(token);
+          curUserElement.innerHTML += message;
+        } catch (error) {
           console.error("Error obtaining authentication token:", error);
-        });
-    }
-    if (userData && userData.cashier != null && userData.cashier == true) {
-      user
+        }
+      }
+    };
 
-        .getIdToken()
-        .then(async function (token) {
-          const totalMemberShopFees = await getTotalMembershipFee(token);
-          curUserElement.innerHTML +=
-            " <br>Samlet indkomst for alle aktive abbonomenter: " +
-            totalMemberShopFees +
-            " DKK" +
-            "&nbsp;";
-          console.log("Cashier signed in");
-        })
-        .catch(function (error) {
-          console.error("Error obtaining authentication token:", error);
-        });
-    }
-    if (userData && userData.coach != null && userData.coach == true) {
-      console.log("coach signed in");
+    handleUser("admin", " <br>Samlet indkomst for alle aktive abbonomenter: ", getTotalMembershipFee);
+    handleUser("cashier", " <br>Samlet indkomst for alle aktive abbonomenter: ", getTotalMembershipFee);
+    handleUser("coach", " <br>Resultater", getAllResults);
 
-      user
-
-        .getIdToken()
-        .then(async function (token) {
-          const totalMemberShopFees = await getAllResults(token);
-          console.log(totalMemberShopFees);
-          curUserElement.innerHTML +=
-            " <br>Resultater" +
-            JSON.stringify(totalMemberShopFees) +
-            "" +
-            "&nbsp;";
-        })
-        .catch(function (error) {
-          console.error("Error obtaining authentication token:", error);
-        });
+    try {
+      const token = await user.getIdToken();
+      handleHashChange(uid, userData.name, userData.email, userData.stage, token);
+    } catch (error) {
+      console.error("Error obtaining authentication token:", error);
     }
 
-    user
-      .getIdToken()
-      .then(async function (token) {
-        const totalMemberShopFees = await handleHashChange(
-          uid,
-          userData.name,
-          userData.email,
-          userData.stage,
-
-          token
-        );
-      })
-      .catch(function (error) {
-        console.error("Error obtaining authentication token:", error);
-      });
-
-    var logoutButton = document.getElementById("logoutButton");
-
-    // Add a click event listener to the logout button
+    const logoutButton = document.getElementById("logoutButton");
     logoutButton.addEventListener("click", function () {
-      // Call the signOut method to log out the user
-      firebase
-        .auth()
-        .signOut()
-
-        .then(function () {
-          location.reload();
-          // Logout successful
-          console.log("User logged out successfully.");
-          // You can redirect to a different page or update UI as needed
-        })
-        .catch(function (error) {
-          // An error occurred
-          console.log("Error logging out:", error);
-        });
+      firebase.auth().signOut().then(function () {
+        location.reload();
+        console.log("User logged out successfully.");
+      }).catch(function (error) {
+        console.log("Error logging out:", error);
+      });
     });
 
     // Make the API call here
     // ...
   } else {
     console.log("logged out");
-    var logoutButton = document.getElementById("logoutButton");
+    const logoutButton = document.getElementById("logoutButton");
     logoutButton.style.display = "none";
-    // User is signed out
-    // Handle sign-out case if needed
   }
 });

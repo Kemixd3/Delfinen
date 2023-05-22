@@ -112,7 +112,13 @@ function handleHashChange(uid, name, email, stage, token) {
   } else if (view === "about") {
     welcome.innerHTML = "Om os:";
   } else if (view === "user") {
-    welcome.innerHTML = "Delfinen Svømmegruppe:";
+    welcome.innerHTML = "Delfinen Svømmegruppens forside:";
+    content.innerHTML = `<div class="newspaper">
+    <h1>Nyheder:</h1>
+    <img src="newspaper-image.jpg" alt="Newspaper Image">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim convallis tempus.</p>
+  </div>`;
+
   }
 }
 
@@ -140,7 +146,6 @@ const displayUserInfo = async (user) => {
 
 function handleSignIn(event) {
   event.preventDefault();
-
   const email = emailInput.value;
   const password = passwordInput.value;
 

@@ -219,3 +219,27 @@ body {
 .navbar button:hover {
   background-color: #4285F4;
 }
+
+.newspaper {
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 400px;
+}
+
+.newspaper img {
+  max-width: 100%;
+  height: auto;
+}
+
+.newspaper h1 {
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+.newspaper p {
+  font-size: 16px;
+  margin: 0;
+}

@@ -64,13 +64,14 @@ async function handleHashChange(uid, name, email, stage, token) {
       </form>
       <table id='ARTable'> </table>
     `;
-    console.log(title, "title");
     console.log(allRes, "allres");
+    
+    title = title.toLowerCase();
 
-    if (title == "Cashier" || title == "Admin") {
+    if (title == "cashier" || title == "admin") {
       content.innerHTML += `<div class="fees"><p>Samlet betaling: ${totalFee}</p> </div><br>`;
     }
-    if (title == "Coach" || title == "Admin") {
+    if (title == "coach" || title == "admin") {
 
       var table = document.getElementById("ARTable");
 
@@ -222,7 +223,8 @@ async function getProfile(uid) {
 
   if (userData != null) {
     const values = Object.values(userData);
-    title = values[0].name;
+    const firstName = Object.keys(values[2])[0];
+    title = firstName.toLowerCase();
 
     const objWithName = values.find((obj) => obj.hasOwnProperty("name"));
     //console.log(objWithName)

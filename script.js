@@ -29,6 +29,7 @@ oceanheading.style.display = "block";
 var signIn = document.getElementById("signIn");
 signIn.style.display = "block";
 
+
 profilForm.style.display = "none";
 // Function to handle the hashchange event
 let title;
@@ -39,6 +40,7 @@ async function handleHashChange(uid, name, email, stage, token) {
   const hash = window.location.hash;
   const welcome = document.getElementById("wText");
   const view = hash.substring(1);
+  //    location.reload();
   content.innerHTML = "";
   const text = document.getElementById("curUser");
   text.style.display = "none";
@@ -65,7 +67,7 @@ async function handleHashChange(uid, name, email, stage, token) {
       <table id='ARTable'> </table>
     `;
     console.log(allRes, "allres");
-    
+
     title = title.toLowerCase();
 
     if (title == "cashier" || title == "admin") {
@@ -84,7 +86,7 @@ async function handleHashChange(uid, name, email, stage, token) {
         headerCell.style.padding = "8px";
         headerRow.appendChild(headerCell);
       }
-      
+
       // Create table rows and cells
       allRes.forEach(function (item) {
         var row = table.insertRow();
@@ -141,12 +143,34 @@ async function handleHashChange(uid, name, email, stage, token) {
     welcome.innerHTML = "Om os:";
   } else if (view === "user") {
     welcome.innerHTML = "Delfinen Svømmegruppens forside:";
-    content.innerHTML = `<div class="newspaper">
-    <h1>Nyheder:</h1>
-    <img src="newspaper-image.jpg" alt="Newspaper Image">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim convallis tempus.</p>
-    </div>`;
+    content.innerHTML = `
+    <div class="container">
+      <div class="newspaper">
+        <img src="images/svømmer.jpg" style="width: 20vw;">
+        <h1><br>Delfinens Svømmegruppe: Jens vinder førstepladsen i stævne og sætter rekord:</h1>
+        <p>24. maj 2023 <br>
+        I en imponerende præstation har Jens, medlem af Delfinens Svømmegruppe, erobret førstepladsen og sat en ny rekord ved det prestigefyld
+        te svømmestævne, der blev afholdt i går. Jens' utrolige præstation er nu at finde på forsiden som et stærk
+        t bevis på klubbens talent og dedikation.
+        </p>
+      </div>
+      <div class="newspaper">
+        <img src="images/svømmer2.jpg" style="width: 20vw;"><br>
+        <h1><br>Delfinens Svømmegruppe afholder vellykket velgørenhedssvømning til fordel for klimaprojekter:</h1>
+        <p>14. maj 2023 <br>
+        Delfinens Svømmegruppe, en af byens førende svømmeklubber, har netop afholdt en vellykket velgørenhedssvømning til fordel for klimaprojekter. Den spændende begivenhed fandt sted i det lokale svømmecenter og tiltrak både deltagere og støttere fra lokalsamfundet.
+
+      </div>
+      <div class="newspaper">
+        <img src="images/svømmer3.jpg" style="width: 20vw;"><br>
+        <h1><br>Delfinens Svømmegruppe lancerer initiativ til at lære børn vandtilvænning og svømning:</h1>
+        <p>15. maj 2023 <br>
+        Delfinens Svømmegruppe har netop annonceret lanceringen af et spændende initiativ, der sigter mod at lære børn vandtilvænning og svømning. Klubben ønsker at øge bevidstheden om vigtigheden af ​​vandsikkerhed og give børn muligheden for at lære essentielle svømmefærdigheder.        </p>
+      </div>
+    </div>
+  `;
   }
+  
 }
 
 // Add event listener for hashchange event
@@ -237,21 +261,23 @@ firebase.auth().onAuthStateChanged(async function (user) {
     totalFee = await getTotalMembershipFee(token);
     allRes = await getAllResults(token);
 
+    
     const signIn = document.getElementById("signIn");
     const signupBtn = document.getElementById("signupBtn");
     signIn.style.display = "none";
     signupBtn.style.display = "none";
     const uid = user.uid;
     console.log("logging in");
-
-
+        
+    
     var changeColor = document.getElementById("footer");
     var changeNav = document.getElementById("navBar");
-    changeColor.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
-    changeNav.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
-
+    changeColor.style.backgroundColor = "rgba(230, 230, 250)";
+    changeNav.style.backgroundColor = "rgba(230, 230, 250)";
+    
     const curUserElement = document.getElementById("curUser");
     const userData = await getProfile(uid);
+    window.location.href = "#user";
 
     console.log("id", userData);
     title = userData.name;
@@ -279,16 +305,19 @@ firebase.auth().onAuthStateChanged(async function (user) {
       console.log("User data is missing or incomplete");
     }
 
+
+    
     try {
       const token = await user.getIdToken();
+      
       handleHashChange(uid, userData.name, userData.email, userData.stage, token);
     } catch (error) {
       console.error("Error obtaining authentication token:", error);
     }
-
-
-
-
+    
+    
+    
+    
     const logoutButton = document.getElementById("logoutButton");
     logoutButton.addEventListener("click", function () {
       firebase.auth().signOut().then(function () {
@@ -298,7 +327,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
         console.log("Error logging out:", error);
       });
     });
-
+    
     // Make the API call here
     // ...
   } else {

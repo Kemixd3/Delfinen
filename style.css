@@ -218,28 +218,59 @@ body {
 }
 
 .newspaper {
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.5);
+  align-items: flex-start;
+  background-color: rgba(255, 255, 255,0.5);
   border: 1px solid #ccc;
   padding: 20px;
   width: 400px;
+  transition: width 0.3s ease;
+  position: relative; /* Add position property */
+  z-index: 1; /* Add z-index property */
+}
+
+.newspaper.clicked {
+  width: 80vw;
+  z-index: 2; /* Increase z-index value */
 }
 
 .newspaper img {
   max-width: 100%;
   height: auto;
+  float: left;
+  margin-right: 10px;
+}
+
+.newspaper .additional-content {
+  display: none;
+}
+
+.newspaper.clicked .additional-content {
+  display: block;
+}
+
+.load-more {
+  margin-top: 10px;
 }
 
 .newspaper h1 {
   font-size: 24px;
+  color: #000;
+  text-shadow: none;
   margin: 10px 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .newspaper p {
   font-size: 16px;
   margin: 0;
 }
+
 
 .row {
   display: flex;

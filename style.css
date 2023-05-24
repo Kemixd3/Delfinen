@@ -214,7 +214,7 @@ body {
 }
 
 .navbar button:hover {
-  background-color: #4285F4;
+  background-color: #4285f4;
 }
 
 .newspaper {
@@ -243,13 +243,11 @@ body {
 
 .row {
   display: flex;
-  align-items: center; /* Center items vertically */
-  justify-content: center; /* Center items horizontally */
 }
 
 #formFeeContainer {
   position: absolute;
-  right: 150px; /* Adjust the distance from the right edge */
+  right: 50px; /* Adjust the distance from the right edge */
 }
 
 #signupForm {
@@ -257,19 +255,84 @@ body {
   /* Add any necessary styling for the form */
 }
 
-table{
-  display: flex;
+table {
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  background-color: rgb(27, 60, 158);
+}
 
+.fees {
+  display: flex;
+  font-size: 1vw;
   align-items: center; /* Center items vertically */
   justify-content: center; /* Center items horizontally */
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-.fees{
+button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.profile-heading {
+  text-align: center;
+  font-size: 24px;
+  color: #000000;
+  /* Add any other desired styles */
+}
+
+.column {
+  margin: 10px;
+
+  flex-basis: 13.33%; /* Each column takes up 1/3 of the container width */
+  border: 5px solid #000000;
+
+  display: inline-block;
+}
+
+.columns {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.swimmer {
+  margin-bottom: 5px;
+}
+
+.container {
   display: flex;
-  font-size: 1vw;
-    align-items: center; /* Center items vertically */
-    justify-content: center; /* Center items horizontally */
-    background-color: rgba(255, 255, 255, 0.5);
-  
+  justify-content: center;
+}
+
+.user-profiles {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-cell {
+  border: 1px solid #fcfcfc;
+  padding: 8px;
+}
+
+.update-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.update-button:hover {
+  background-color: #45a049;
+}
+
+#dialog {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+  z-index: 9999; /* Set a higher z-index value */
 }

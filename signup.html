@@ -65,7 +65,10 @@
             <option value="active">Aktiv</option>
             <option value="passive">Passiv</option>
           </select>
-          <button type="submit">Sign up</button>
+          <button type="button" id="toggleButton">
+            Klik her hvis du har betalt (DEMO)
+          </button>
+          <button type="submit" id="submitButton" disabled>Opret konto</button>
         </form>
       </div>
 
@@ -75,7 +78,7 @@
     </div>
 
     <div style="align-items: center; justify-content: center; display: flex">
-      <button onclick="goToMain()">Go to SignIn Page</button>
+      <button onclick="goToMain()">Gå til login</button>
     </div>
     <div id="signup-message"></div>
 
@@ -112,5 +115,25 @@
     <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
     <script src="signup.js"></script>
     <script src="birthdate.js"></script>
+    <script>
+      const toggleButton = document.getElementById("toggleButton");
+      const submitButton = document.getElementById("submitButton");
+      let isToggled = false;
+
+      toggleButton.addEventListener("click", function () {
+        isToggled = !isToggled;
+
+        if (isToggled) {
+          toggleButton.textContent = "Ja";
+          submitButton.disabled = false;
+          toggleButton.value = true;
+          console.log(toggleButton.value);
+        } else {
+          toggleButton.textContent = "Nej";
+          submitButton.disabled = true;
+          toggleButton.value = false;
+        }
+      });
+    </script>
   </body>
 </html>

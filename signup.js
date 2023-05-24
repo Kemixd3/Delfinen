@@ -32,6 +32,7 @@ signupForm.addEventListener("submit", (e) => {
   const subscription = signupForm.subscription.value;
   const gender = signupForm.gender.value;
   const phone = signupForm.phone.value;
+  const payed = signupForm.toggleButton.value;
 
   // Call Firebase auth to create a new user with the email and password
   firebase
@@ -86,6 +87,7 @@ signupForm.addEventListener("submit", (e) => {
             uid: uid,
             email: email,
             oprettet: formattedDate,
+            billingdate: formattedDate,
             name: name,
             age: age1,
             userType: userType,
@@ -93,6 +95,7 @@ signupForm.addEventListener("submit", (e) => {
             stage: stage,
             gender: gender,
             phone: phone,
+            payed: payed,
           };
 
           fetch(`${endpoint}/${uid}.json`, {

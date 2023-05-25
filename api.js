@@ -12,12 +12,11 @@ async function deleteData(id, type) {
   }
 }
 //getting a specific user with the uid from auth
-const endpoint =
-  "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app";
+
 export async function getUserId() {
   try {
-    const user = firebase.auth().currentUser;
-    const uid = user.uid;
+    const user = await firebase.auth().currentUser;
+    const uid = await user.uid;
 
     const endpoint =
       "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app";

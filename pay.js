@@ -22,20 +22,6 @@ export function calculateMembershipFee(age, active, ageGroup, uid, id) {
     membershipFee: membershipFee,
   };
   //PATCH request to update profile data
-  fetch(`${endpoint}/users/${uid}/${id}.json`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Membership fee posted successfully:", data);
-    })
-    .catch((error) => {
-      console.error("Error posting membership fee:", error);
-    });
 
   return membershipFee;
 }
@@ -241,7 +227,7 @@ export function displayTopSwimmers(topSwimmers) {
       const swimmerElement = document.createElement("div");
       swimmerElement.classList.add("swimmer");
       swimmerElement.textContent = `Navn: ${swimmer.name}, Email: ${swimmer.email}, Gruppe: ${swimmer.stage},  (${swimmer.time} Sekunder)`;
-      swimmerElement.textContent += ` ${swimmer.tournament},  ${swimmer.placement}.`;
+      swimmerElement.textContent += ` ${swimmer.tournament},  ${swimmer.placement}`;
       tournamentColumn.appendChild(swimmerElement);
     });
   }

@@ -25,27 +25,19 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-// Get the content container element
-var content = document.getElementById("content");
-const openButton = document.getElementById("open-dialog-button");
-const closeButton = document.getElementById("close-dialog-button");
-const dialog = document.getElementById("dialog");
-
-openButton.addEventListener("click", () => {
-  dialog.style.display = "block";
-});
-
-closeButton.addEventListener("click", () => {
-  dialog.style.display = "none";
-});
 var oceanheading = document.getElementById("welcome-text");
 oceanheading.style.display = "block";
-
 var signIn = document.getElementById("signIn");
 signIn.style.display = "block";
+//elements
+var signInButton = document.getElementById("sign-in-button");
+var emailInput = document.getElementById("email2");
+var passwordInput = document.getElementById("password2");
+var curUserElement = document.getElementById("curUser");
+var signIn = document.getElementById("signIn");
+var signupBtn = document.getElementById("signupBtn");
 
-profilForm.style.display = "none";
-// Function to handle the hashchange event
+//handle the hashchange event
 let title;
 let totalFee;
 let allRes;
@@ -61,8 +53,9 @@ async function handleHashChange(uid, name, email, stage, token) {
   const text = document.getElementById("curUser");
   const userDataContainer = document.getElementById("userDataContainer");
   const top5swimmers = document.getElementById("top5swimmers");
-  userDataContainer.style.display = "none";
   top5swimmers.style.display = "none";
+  userDataContainer.style.display = "none";
+
   text.style.display = "none";
 
   if (view === "home") {
@@ -70,9 +63,9 @@ async function handleHashChange(uid, name, email, stage, token) {
     if (token != null) {
       welcome.innerHTML = "Delfinen profil side";
       text.style.display = "block";
-
       userDataContainer.style.display = "block";
       signIn.style.display = "none";
+      //form for sending in training results
       content.innerHTML = `
       <h2 class="profile-heading">Indsend træningsresultat</h2>
       <form style="flex-direction: inherit" id="profilForm2">
@@ -118,32 +111,32 @@ async function handleHashChange(uid, name, email, stage, token) {
       if (title != null) {
         title = title.toLowerCase();
       }
-
+      //Checking if the user has the role of "cashier" or "admin" and if elevation is true
+      //Display the total fee if true
       if ((title == "cashier" || title == "admin") && elevation) {
         content.innerHTML += `<div class="fees"><p>Samlet indkomst for perioden: ${totalFee} DKK</p> </div><br>`;
       }
       if ((title == "coach" || title == "admin") && elevation) {
         async function displayResults() {
           try {
-            // Call the getAllResults function to retrieve the results data
+            //getAllResults function to retrieve the results data
             const results = await getAllResults(localtoken);
 
             const traintype = "competition";
-
+            //results by tournament and store them in results2
             const results2 = await getByTournament(localtoken, traintype);
-
+            //top swimmers by discipline and store them in topswimmers
             const topswimmers = await getTopSwimmersByDiscipline(localtoken);
-            top5swimmers.style.display = "block";
+            //top5swimmers.style.display = "block";
 
             displayTopSwimmers(topswimmers);
             console.log(results2);
-            // Display the filtered results
           } catch (error) {
             console.error("Error displaying results:", error);
           }
         }
 
-        // Call the displayResults function to show the initial results
+        //displayResults function to show the initial results
         displayResults();
       }
 
@@ -174,7 +167,7 @@ async function handleHashChange(uid, name, email, stage, token) {
           time: signupForm2.time.value,
           date,
         };
-
+        //POST request to the results endpoint with the form data
         try {
           const response = await fetch(
             `${endpoint}/results.json?auth=${token}`,
@@ -193,25 +186,78 @@ async function handleHashChange(uid, name, email, stage, token) {
         }
       });
     }
+    // Handle different views based on the hash value in the URL
   } else if (view === "about") {
     welcome.innerHTML = "Om os:";
+
+    // Create animated elements
+    const aboutSection = document.createElement("section");
+    aboutSection.classList.add("about-section");
+
+    const title = document.createElement("h2");
+    title.textContent = "Velkommen til vores team";
+    aboutSection.appendChild(title);
+
+    const teamMembers = [
+      { name: "Jesus. C", position: "Klubformand" },
+      { name: "Nikolai. B", position: "Kasserer" },
+      { name: "Silas. S", position: "Træner" },
+    ];
+
+    teamMembers.forEach((member) => {
+      const memberCard = document.createElement("div");
+      memberCard.classList.add(
+        "member-card",
+        "animate__animated",
+        "animate__fadeInUp"
+      );
+
+      const memberPosition = document.createElement("p");
+      memberPosition.classList.add("member-position");
+      memberPosition.textContent = member.position;
+      memberCard.appendChild(memberPosition);
+
+      const memberName = document.createElement("h3");
+      memberName.classList.add("member-name");
+      memberName.textContent = member.name;
+      memberCard.appendChild(memberName);
+
+      aboutSection.appendChild(memberCard);
+    });
+
+    // Append the animated elements to the DOM
+    welcome.appendChild(aboutSection);
   } else if (view === "user") {
     welcome.innerHTML = "Delfinen Svømmegruppens forside:";
-    content.innerHTML = `<div class="newspaper">
-    <h1>Nyheder:</h1>
-    <img src="newspaper-image.jpg" alt="Newspaper Image">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim convallis tempus.</p>
-    </div>`;
+    content.innerHTML = `
+    <div class="container">
+   
+      <div class="newspaper">
+        <img src="images/svømmer2.jpg" style="width: 20vw;"><br>
+        <h1><br>Delfinens Svømmegruppe afholder vellykket velgørenhedssvømning til fordel for klimaprojekter:</h1>
+        <p>14. maj 2023 <br>
+        Delfinens Svømmegruppe, en af byens førende svømmeklubber, har netop afholdt en vellykket velgørenhedssvømning til fordel for klimaprojekter. Den spændende begivenhed fandt sted i det lokale svømmecenter og tiltrak både deltagere og støttere fra lokalsamfundet.
+
+      </div>
+      <div class="newspaper">
+      <img src="images/svømmer.jpg" style="width: 20vw;">
+      <h1><br>Delfinens Svømmegruppe: Jens vinder førstepladsen i stævne og sætter rekord:</h1>
+      <p>24. maj 2023 <br>
+      I en imponerende præstation har Jens, medlem af Delfinens Svømmegruppe, erobret førstepladsen og sat en ny rekord ved det prestigefyld
+      te svømmestævne, der blev afholdt i går. Jens' utrolige præstation er nu at finde på forsiden som et stærk
+      t bevis på klubbens talent og dedikation.
+      </p>
+    </div>
+      <div class="newspaper">
+        <img src="images/svømmer3.jpg" style="width: 20vw;"><br>
+        <h1><br>Delfinens Svømmegruppe lancerer initiativ til at lære børn vandtilvænning og svømning:</h1>
+        <p>15. maj 2023 <br>
+        Delfinens Svømmegruppe har netop annonceret lanceringen af et spændende initiativ, der sigter mod at lære børn vandtilvænning og svømning. Klubben ønsker at øge bevidstheden om vigtigheden af ​​vandsikkerhed og give børn muligheden for at lære essentielle svømmefærdigheder.        </p>
+      </div>
+    </div>
+  `;
   }
 }
-
-// Cache frequently used elements
-var signInButton = document.getElementById("sign-in-button");
-var emailInput = document.getElementById("email2");
-var passwordInput = document.getElementById("password2");
-var curUserElement = document.getElementById("curUser");
-var signIn = document.getElementById("signIn");
-var signupBtn = document.getElementById("signupBtn");
 
 // Extract the logic into separate functions
 const signInWithEmailAndPassword = (email, password) =>
@@ -233,7 +279,7 @@ function handleSignIn(event) {
 
   signInWithEmailAndPassword(email, password)
     .then(({ user }) => {
-      console.log(`Signed in as ${user.email}`);
+      //console.log(`User ${user.email}`);
       displayUserInfo(user);
       signIn.style.display = "none";
       signupBtn.style.display = "none";
@@ -256,15 +302,14 @@ var prevScrollpos = window.pageYOffset;
 window.onscroll = function () {
   var currentScrollPos = window.pageYOffset;
   if (prevScrollpos > currentScrollPos) {
-    document.getElementById("myHeader").style.top = "0";
   } else {
-    document.getElementById("myHeader").style.top = "-150px"; // Hide the header when scrolling down
   }
   prevScrollpos = currentScrollPos;
 };
 
 async function getProfile(uid) {
-  //console.log("PROF", uid)
+  //console.log("uid", uid)
+  //get request to get profile data store in firebase
   const response = await fetch(`${endpoint}/users/${uid}.json`, {
     method: "GET",
     headers: {
@@ -284,7 +329,6 @@ async function getProfile(uid) {
     //}
 
     const objWithName = values.find((obj) => obj.hasOwnProperty("name"));
-    //console.log(objWithName)
     return objWithName;
   }
 }
@@ -298,8 +342,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         const id = await getUserId();
-        console.log(uid, "FEJL");
-
+        //getting the data inside of uid and id which is private profile data. Firebase is setup with rules so you need uid to GET and POST data
         const endpoint =
           "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app/users";
 
@@ -312,8 +355,8 @@ firebase.auth().onAuthStateChanged(async function (user) {
         });
 
         const userData = await response.json();
-        console.log(userData.email);
-        // Populate the form fields with the user data
+        //console.log(userData.email);
+        //form fields with the user data
         const age = document.getElementById("age");
 
         const nameInput = document.getElementById("name");
@@ -321,7 +364,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
         const userTypeSelect = document.getElementById("userType");
         const genderSelect = document.getElementById("gender");
         const subscription = document.getElementById("subscription");
-        // Set the form field values
+        //setting the form field values
 
         age.value = userData.age || "0";
         nameInput.value = userData.name || "0";
@@ -335,34 +378,41 @@ firebase.auth().onAuthStateChanged(async function (user) {
       }
     }
 
-    // Call the function to display the user data in the form
+    //function to display the user data in the form
     displayUserData()
       .then(() => {
         console.log("User data displayed successfully");
       })
       .catch((error) => {
-        // Handle the error
+        //error handle
         console.error("Error:", error);
       });
+
+    //handle more ui elements on login
     const signIn = document.getElementById("signIn");
     const signupBtn = document.getElementById("signupBtn");
     signIn.style.display = "none";
     signupBtn.style.display = "none";
+
     const uid = user.uid;
     console.log("logging in");
 
+    const demoContainer = document.getElementById("demo-container");
+    demoContainer.style.display = "none";
+
     var changeColor = document.getElementById("footer");
     var changeNav = document.getElementById("navBar");
-    changeColor.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
-    changeNav.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+    changeColor.style.backgroundColor = "rgba(230, 230, 250)";
+    changeNav.style.backgroundColor = "rgba(230, 230, 250)";
 
     const curUserElement = document.getElementById("curUser");
     const userData = await getProfile(uid);
-
-    console.log("id", userData);
+    window.location.href = "#user";
+    //console.log("id", userData);
     title = userData.name;
+    //do stuff on window url switch
     window.addEventListener("hashchange", function () {
-      // Code to be executed when the URL hash changes
+      //to be executed when the URL hash changes
 
       handleHashChange(
         uid,
@@ -382,7 +432,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       curUserElement.innerHTML = `Brugernavn: ${
         userData.name || "none"
       }&nbsp;</br>Mail: ${userData.email || "none"}`;
-
+      //display users data when logged in
       const response = await fetch(`${endpoint}/users/${uid}.json`, {
         method: "GET",
         headers: {
@@ -393,9 +443,9 @@ firebase.auth().onAuthStateChanged(async function (user) {
 
       const userdate2 = await response.json();
       const id = Object.keys(userdate2)[0];
-      console.log(id);
+      //console.log(id);
       // Add event listener for hashchange event
-
+      //calculate the MemberShipFee when logging in or page reload
       const subscriptionPrice = calculateMembershipFee(
         userData.age,
         userData.subscription,
@@ -403,23 +453,40 @@ firebase.auth().onAuthStateChanged(async function (user) {
         uid,
         id
       );
+      //showing current membership fee for next period
       curUserElement.innerHTML += ` <br> Til betaling i næste periode: ${subscriptionPrice} DKK&nbsp;`;
-      console.log(user.uid);
     } else {
       curUserElement.innerHTML = `Brugernavn: ${
         userData.name || "none"
       } &nbsp;</br>Mail: ${user.email || "none"}`;
       console.log("User data is missing or incomplete");
     }
+    //if people with higher elevation log in
     if (userData && (userData.admin || userData.coach || userData.cashier)) {
       elevation = true;
-      console.log(elevation);
+      //console.log(elevation);
       localtoken = token;
       totalFee = await getTotalMembershipFee(token);
       allRes = await getAllResults(token);
       const profiles = await getProfiles(localtoken, uid);
-    }
+      //handle their elements
+      const openButton = document.getElementById("open-dialog-button");
+      openButton.style.display = "block";
+      const closeButton = document.getElementById("close-dialog-button");
+      const dialog = document.getElementById("dialog");
 
+      openButton.addEventListener("click", () => {
+        dialog.style.display = "block";
+      });
+
+      closeButton.addEventListener("click", () => {
+        dialog.style.display = "none";
+      });
+    } else {
+      const openButton = document.getElementById("open-dialog-button");
+      openButton.style.display = "none";
+    }
+    //sending elevation along in handleHashChange
     try {
       const token = await user.getIdToken();
       handleHashChange(
@@ -435,6 +502,8 @@ firebase.auth().onAuthStateChanged(async function (user) {
     }
 
     const logoutButton = document.getElementById("logoutButton");
+    logoutButton.style.display = "block";
+    //handle what happens when signing out
     logoutButton.addEventListener("click", function () {
       firebase
         .auth()
@@ -448,11 +517,16 @@ firebase.auth().onAuthStateChanged(async function (user) {
         });
     });
 
-    // Make the API call here
-    // ...
+    //when no one is logged in yet
   } else {
     console.log("logged out");
     const logoutButton = document.getElementById("logoutButton");
     logoutButton.style.display = "none";
+    const openButton = document.getElementById("open-dialog-button");
+    openButton.style.display = "none";
+
+    demoContainer.style.display = "block";
+    const demoContainer = document.createElement("div");
+    demoContainer.classList.add("demo-container");
   }
 });

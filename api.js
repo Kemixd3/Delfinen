@@ -11,6 +11,7 @@ async function deleteData(id, type) {
     response_message("ERROR: DATA IKKE SLETTET");
   }
 }
+//getting a specific user with the uid from auth
 const endpoint =
   "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app";
 export async function getUserId() {
@@ -37,7 +38,7 @@ export async function getUserId() {
     throw error;
   }
 }
-
+//smart way of getting all ids inside user => uid => (id)
 export async function getAllUserIds(token) {
   try {
     const endpoint =
@@ -70,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const userDataForm = document.getElementById("userDataForm");
 
   userDataForm.addEventListener("submit", async function (e) {
-    console.log("shit");
+    //console.log("works");
     e.preventDefault();
 
     const name = document.getElementById("name").value;
@@ -93,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
       phone: phone,
       //payed: payed,
     };
+    //PATCH private data inside uid/id
     const id = await getUserId();
     console.log(await getUserId());
     const endpoint = `https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app/users/${uid}/${id}.json`;
@@ -119,7 +121,7 @@ async function displayUserData() {
     const user = firebase.auth().currentUser;
     const uid = user.uid;
     const id = await getUserId();
-    console.log("FEJL");
+    //console.log("works");
 
     const endpoint =
       "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app/users";
@@ -134,7 +136,7 @@ async function displayUserData() {
 
     const userData = await response.json();
     console.log(userData.email);
-    // Populate the form fields with the user data
+    //the form fields with the user data
     const age = document.getElementById("age");
 
     const nameInput = document.getElementById("name");
@@ -142,7 +144,7 @@ async function displayUserData() {
     const userTypeSelect = document.getElementById("userType");
     const genderSelect = document.getElementById("gender");
 
-    // Set the form field values
+    //set the form field values
 
     age.value = userData.age || "0";
     nameInput.value = userData.name || "0";
@@ -155,16 +157,7 @@ async function displayUserData() {
   }
 }
 
-// Call the function to display the user data in the form
-//displayUserData()
-//  .then(() => {
-//    console.log("User data displayed successfully");
-//  })
-//  .catch((error) => {
-//    // Handle the error
-//    console.error("Error:", error);
-//  });
-
+//getting all profiles with auth token
 export async function getProfiles(token, uid) {
   console.log(token);
   const endpoint =
@@ -186,14 +179,14 @@ export async function getProfiles(token, uid) {
 
   const tableContainer = document.getElementById("table-container");
 
-  // Clear existing table content
+  //clear existing table content
   tableContainer.innerHTML = "";
 
-  // Create the table
+  //create new table
   const table = document.createElement("table");
   table.classList.add("user-profiles");
 
-  // Create the table header
+  //create table header
   const tableHeader = document.createElement("thead");
   const headerRow = document.createElement("tr");
   const headers = [
@@ -202,93 +195,140 @@ export async function getProfiles(token, uid) {
     "Email",
     "Køn",
     "Gruppe",
-    "Subscription",
+    "Abonnement",
     "Betalingsdato",
     "Abonnementspris",
-    "Betalt",
+    "Restance",
     "Opdater bruger",
   ];
 
   headers.forEach((headerText) => {
     const headerCell = document.createElement("th");
     headerCell.textContent = headerText;
+    headerCell.classList.add("header-cell"); // Add the CSS class
     headerRow.appendChild(headerCell);
   });
 
   tableHeader.appendChild(headerRow);
   table.appendChild(tableHeader);
 
-  // Create the table body
+  //create the table body
   const tableBody = document.createElement("tbody");
 
   Object.entries(users).forEach(([userId, user]) => {
     const userRow = document.createElement("tr");
 
-    // Name
+    //name
     const nameCell = document.createElement("td");
     nameCell.textContent = user.name;
     nameCell.classList.add("table-cell");
     userRow.appendChild(nameCell);
 
-    // Age
+    //age
     const ageCell = document.createElement("td");
     ageCell.textContent = user.age;
     ageCell.classList.add("table-cell");
     userRow.appendChild(ageCell);
 
-    // Email
+    //email
     const emailCell = document.createElement("td");
     emailCell.textContent = user.email;
     emailCell.classList.add("table-cell");
     userRow.appendChild(emailCell);
 
-    // Gender
+    //gender
     const genderCell = document.createElement("td");
     genderCell.textContent = user.gender;
     genderCell.classList.add("table-cell");
     userRow.appendChild(genderCell);
 
-    // Stage
+    //stage
     const stageCell = document.createElement("td");
     stageCell.textContent = user.stage;
     stageCell.classList.add("table-cell");
     userRow.appendChild(stageCell);
 
-    // Subscription
+    //subscription
     const subscriptionCell = document.createElement("td");
     subscriptionCell.textContent = user.subscription;
     subscriptionCell.classList.add("table-cell");
     userRow.appendChild(subscriptionCell);
 
-    // billingdateCell
+    //billingdateCell
     const billingdateCell = document.createElement("td");
     billingdateCell.textContent = user.billingdate;
     billingdateCell.classList.add("table-cell");
     userRow.appendChild(billingdateCell);
 
-    // membershipFee
+    //membershipFee
     const membershipFee = document.createElement("td");
     membershipFee.textContent = user.membershipFee;
     membershipFee.classList.add("table-cell");
     userRow.appendChild(membershipFee);
 
-    // payed
+    //payed
     const payed = document.createElement("td");
     payed.textContent = user.payed;
     payed.classList.add("table-cell");
     userRow.appendChild(payed);
 
-    // Update Button
+    //updatebutton
     const updateCell = document.createElement("td");
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Slet bruger";
+
     const updateButton = document.createElement("button");
-    updateButton.textContent = "Update";
+    updateButton.textContent = "Opdater data";
     updateButton.addEventListener("click", () => {
-      // Handle update button click for the specific user
-      console.log("userid", user);
       updateButton.textContent = user.uid;
     });
+    deleteButton.addEventListener("click", () => {
+      //update button click for the specific user in the table
+      console.log("userid", user);
+      deleteButton.textContent = user.uid;
+
+      //email is not null
+      if (user.email !== null) {
+        //confirmation popup
+        const confirmed = confirm(
+          "Er du sikker på at du vil slette denne bruger?"
+        );
+        //delete request til at slette bruger ud fra deres uid
+        if (confirmed) {
+          try {
+            const endpoint =
+              "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app/users";
+            const response = fetch(`${endpoint}/${user.uid}.json`, {
+              method: "DELETE",
+            });
+
+            if (response.ok) {
+              console.log("User deleted successfully");
+            } else {
+              throw new Error("OK");
+            }
+          } catch (error) {
+            console.error("Error deleting user:", error);
+            //error message in a confirm view
+            window.alert("Bruger er nu tom men google auth er stadig aktiv");
+          }
+        }
+      } else {
+        console.log("Cannot delete user with null email");
+        //error message or handle the case when email is null
+        window.alert(
+          "Kan ikke slette allerede tom bruger eller bruger med høj status"
+        );
+      }
+      location.reload();
+    });
+
     updateButton.classList.add("update-button");
     updateCell.appendChild(updateButton);
+
+    deleteButton.classList.add("delete-button");
+    updateCell.appendChild(deleteButton);
+
     userRow.appendChild(updateCell);
 
     tableBody.appendChild(userRow);

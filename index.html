@@ -7,47 +7,41 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="icon" type="image/x-icon" href="/images/logo.png" />
     <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div id="pageFill" class="pageFill"></div>
     <nav id="navBar" class="navbar">
       <a href="#user" class="view-link">Forside</a>
       <a href="#about" class="view-link">Om os</a>
-      <a
-        href="#home"
-        style="
-          background: transparent;
-          right: 2%;
-          position: absolute;
-          display: inline-block;
-          padding: 0;
-          border: none;
-          background: none;
-          text-decoration: none;
-        "
-      >
-        <img src="images/profile.png" style="width: 5vw" />
+      <a href="#home" class="view-link">
+        <img src="images/profile.png" class="profile-image" />
       </a>
     </nav>
-    <div
-      id="welcome-text"
-      style="align-items: center; justify-content: center; display: flex"
-    >
-      <h1 id="wText" style="text-align: center">Delfinen Svømmeklub</h1>
+    <div id="welcome-text" class="welcome-text">
+      <h1 id="wText" class="welcome-heading">Delfinen Svømmeklub</h1>
     </div>
+    <div id="demo-container" class="demo-container">
+      <h3>Demo Profiler:</h3>
+      <p>Email: admin@example.com</p>
+      <p>Kode: admin123</p>
+      <p>Email: handleninfo+1@gmail.com</p>
+      <p>Kode: cashier</p>
+      <p>Email: handleninfo+8@gmail.com</p>
+      <p>Kode: coach123</p>
+      <p>Email: user@example.com</p>
+      <p>Kode: user123</p>
+    </div>
+
     <section>
-      <video autoplay muted loop id="myVideo" style="z-index: -55">
+      <video autoplay muted loop id="myVideo" class="background-video">
         <source src="assets/pixabay-swim.mp4" type="video/mp4" />
       </video>
       <section>
-        <h1
-          style="font-size: 1.5vw; text-align: center"
-          id="curUser"
-          style="display: block"
-        ></h1>
+        <h1 id="curUser" class="current-user"></h1>
         <button id="logoutButton" class="login-out-btn hidden">Log ud</button>
         <div id="content"></div>
-        <form id="profilForm" style="display: none">
+        <form id="profilForm" class="profil-form">
           <select id="userType2">
             <option value="" disabled selected>Vælg din svømmekategori</option>
             <option value="exerciser">Motionist</option>
@@ -55,43 +49,29 @@
           </select>
           <button type="submit">Indsend resultat</button>
         </form>
-        <div
-          id="signupBtn"
-          style="align-items: center; justify-content: center; display: flex"
-        >
+        <div id="signupBtn" class="signup-button">
           <button onclick="goToSignup()">Go to Signup Page</button>
         </div>
       </section>
-      <button id="open-dialog-button">Open Dialog</button>
+      <button id="open-dialog-button">Bruger konsol</button>
 
-      <div
-        id="dialog"
-        style="
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.5);
-          overflow: auto;
-        "
-      >
-        <button id="close-dialog-button">Close Dialog</button>
+      <div id="dialog" class="dialog-container">
+        <button id="close-dialog-button" class="dialog-button">
+          Luk dialog
+        </button>
         <div id="table-container"></div>
       </div>
 
       <div class="container columns">
         <div class="row">
-          <div id="top5swimmers" style="display: none">
-            <div id="junior-column" class="column"></div>
-            <div id="tournament-column" class="column"></div>
+          <div id="top5swimmers" style="display: none"></div>
 
-            <div id="senior-column" class="column"></div>
-          </div>
+          <div id="junior-column" class=""></div>
+          <div id="tournament-column" class=""></div>
+          <div id="senior-column" class=""></div>
         </div>
 
-        <div id="userDataContainer" class="column" style="display: none">
+        <div id="userDataContainer" class="" style="display: none">
           <h2 class="profile-heading">Rediger din profil:</h2>
           <form id="userDataForm">
             <label for="name">Navn</label>
@@ -134,10 +114,7 @@
           <button type="submit" id="sign-in-button">Sign In</button>
         </form>
       </div>
-      <div
-        id="signupBtn"
-        style="align-items: center; justify-content: center; display: flex"
-      ></div>
+      <div id="signupBtn" class="signup-button"></div>
     </section>
     <footer id="footer">
       <div class="footer-section">

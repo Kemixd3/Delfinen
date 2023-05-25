@@ -1,6 +1,6 @@
 #myVideo {
-  width: 100vw;
-  height: 14vh;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   position: fixed;
   left: 0;
@@ -66,12 +66,13 @@ button[type="submit"] {
   bottom: 0;
   left: 0;
   right: 0;
-  position: fixed;
+
   display: flex;
   justify-content: center;
   align-items: stretch;
   border: 1px solid #000000;
   transition: background-color 0.5s;
+  margin-top: 100%;
 }
 
 h1 {
@@ -121,13 +122,13 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+
   background-image: url("background.jpg");
 }
 
 #myVideo {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   position: fixed;
   left: 0;
@@ -224,6 +225,8 @@ body {
   border: 1px solid #ccc;
   padding: 20px;
   width: 400px;
+  animation-name: fade-in;
+  animation-duration: 1s;
 }
 
 .newspaper img {
@@ -258,7 +261,7 @@ body {
 table {
   align-items: center; /* Center items vertically */
   justify-content: center; /* Center items horizontally */
-  background-color: rgb(27, 60, 158);
+  background-color: rgb(10, 112, 228);
 }
 
 .fees {
@@ -282,20 +285,44 @@ button[type="submit"]:disabled {
 }
 
 .column {
-  margin: 10px;
-
   flex-basis: 13.33%; /* Each column takes up 1/3 of the container width */
-  border: 5px solid #000000;
-
-  display: inline-block;
+  border: 3px solid #0061fd;
 }
 
 .columns {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
+.discipline-section {
+  border: 3px solid #0061fd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
 .swimmer {
+  border: 3px solid #0061fd;
+  padding: 5px;
   margin-bottom: 5px;
+  font-size: 22px;
+}
+
+h2 {
+  margin-bottom: 10px;
+  font-size: 34px;
+}
+
+h3 {
+  margin-bottom: 5px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#junior-column,
+#senior-column,
+#tournament-column {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 170px;
 }
 
 .container {
@@ -320,6 +347,13 @@ button[type="submit"]:disabled {
   cursor: pointer;
   padding: 8px 16px;
 }
+.delete-button {
+  background-color: #e40000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+}
 
 .update-button:hover {
   background-color: #45a049;
@@ -335,4 +369,144 @@ button[type="submit"]:disabled {
   background: rgba(0, 0, 0, 0.5);
   overflow: auto;
   z-index: 9999; /* Set a higher z-index value */
+}
+
+.header-cell {
+  font-size: 40px; /* Adjust the font size as desired */
+}
+
+#open-dialog-button {
+  margin: 0 auto;
+  background-color: #00a2ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 16px 32px;
+}
+
+.navbar {
+  position: relative;
+}
+
+.navbar .view-link {
+  display: inline-block;
+  margin-right: 2%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-decoration: none;
+}
+.navbar .view-link img {
+  width: 5vw;
+}
+
+#welcome-text {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+#col-md-3 {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+#wText {
+  text-align: center;
+}
+
+#myVideo {
+  z-index: -55;
+}
+
+#curUser {
+  font-size: 1.5vw;
+  text-align: center;
+  display: block;
+}
+
+#logoutButton {
+  display: none;
+}
+
+#profilForm {
+  display: none;
+}
+
+#signupBtn {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+#dialog {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#userDataContainer {
+  display: none;
+}
+
+.container .column {
+  flex: 1;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.about-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.member-card {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px;
+  text-align: center;
+  animation-name: fade-in;
+  animation-duration: 1s;
+}
+
+.member-position {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.member-name {
+  font-size: 16px;
+}
+
+.demo-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin-top: 800px;
+  text-align: center;
+  z-index: 9999;
+  margin-bottom: 40px;
 }

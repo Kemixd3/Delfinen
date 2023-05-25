@@ -10,16 +10,18 @@ export function calculateMembershipFee(age, active, ageGroup, uid, id) {
     } else if (ageGroup === "senior" && age >= 18 && age < 60) {
       membershipFee = 1600;
     } else if (ageGroup === "senior" && age >= 60) {
-      membershipFee = 1600 * 0.75; // 25% discount for members over 60
+      //25% discount for members over 60
+      membershipFee = 1600 * 0.75;
     }
   } else {
-    membershipFee = 500; // Passive membership fee
+    //passive membership fee
+    membershipFee = 500;
   }
 
   const data = {
     membershipFee: membershipFee,
   };
-
+  //PATCH request to update profile data
   fetch(`${endpoint}/users/${uid}/${id}.json`, {
     method: "PATCH",
     headers: {
@@ -46,7 +48,7 @@ export async function getTotalMembershipFee(token) {
 
     let totalMembershipFee = 0;
 
-    // Loop through each user and accumulate the membership fees
+    //loop each user and calculate the membership fees
     for (const userId in usersData) {
       const id = Object.keys(usersData[userId])[0];
       const user = usersData[userId][id];
@@ -57,7 +59,6 @@ export async function getTotalMembershipFee(token) {
         totalMembershipFee += membershipFee;
       }
     }
-
     //console.log("Total Membership Fee:", totalMembershipFee);
     return totalMembershipFee;
   } catch (error) {
@@ -65,14 +66,14 @@ export async function getTotalMembershipFee(token) {
     return 0;
   }
 }
-
+//get all results
 export async function getAllResults(token) {
   try {
     const response = await fetch(`${endpoint}/results.json?auth=${token}`);
 
     const usersResults = await response.json();
     let totalMembershipFee = [];
-    // Loop through each user and accumulate the membership fees
+
     for (const userId in usersResults) {
       //const id = Object.keys(usersResults[userId])[0];
 
@@ -89,7 +90,7 @@ export async function getAllResults(token) {
     return "error in getting user results";
   }
 }
-
+//get by tournament will only get by senior og junior results
 export async function getByTournament(token, traintype) {
   try {
     const response = await fetch(
@@ -117,7 +118,7 @@ export async function getTopSwimmersByDiscipline(token) {
     const response = await fetch(`${endpoint}/results.json?auth=${token}`);
     const usersResults = await response.json();
 
-    // Create an object to store top swimmers by discipline and category
+    //object to store top swimmers by discipline and category
     const topSwimmers = {
       junior: {
         butterfly: [],
@@ -134,7 +135,7 @@ export async function getTopSwimmersByDiscipline(token) {
       tournament: [],
     };
 
-    // Iterate over the users' results and categorize them by discipline and category
+    //tterate over the users results and categorize them by discipline and category
     Object.values(usersResults).forEach((result) => {
       const {
         swimmingdiscipline,
@@ -158,7 +159,7 @@ export async function getTopSwimmersByDiscipline(token) {
       }
     });
 
-    // Sort the top swimmers by time in each discipline and category
+    //sort the top swimmers by time in each discipline and category
     Object.keys(topSwimmers).forEach((category) => {
       if (category !== "tournament") {
         Object.keys(topSwimmers[category]).forEach((discipline) => {
@@ -166,7 +167,7 @@ export async function getTopSwimmersByDiscipline(token) {
             (swimmer1, swimmer2) => swimmer1.time - swimmer2.time
           );
 
-          // Keep only the top 5 swimmers
+          //keeping only the top 5 swimmers
           topSwimmers[category][discipline] = topSwimmers[category][
             discipline
           ].slice(0, 5);
@@ -181,7 +182,6 @@ export async function getTopSwimmersByDiscipline(token) {
     throw error;
   }
 }
-
 export function displayTopSwimmers(topSwimmers) {
   const juniorColumn = document.getElementById("junior-column");
   const seniorColumn = document.getElementById("senior-column");
@@ -192,45 +192,45 @@ export function displayTopSwimmers(topSwimmers) {
   seniorColumn.innerHTML = "";
   tournamentColumn.innerHTML = "";
 
-  // Display top swimmers for each discipline in the junior category
+  // Top swimmers for each discipline in the junior category
   Object.entries(topSwimmers.junior).forEach(([discipline, swimmers]) => {
     const disciplineSection = document.createElement("div");
     disciplineSection.classList.add("discipline-section");
 
     const disciplineHeader = document.createElement("h3");
-    disciplineHeader.textContent = discipline.toUpperCase();
+    disciplineHeader.textContent = discipline.toUpperCase() + " Junior";
     disciplineSection.appendChild(disciplineHeader);
 
     swimmers.forEach((swimmer) => {
       const swimmerElement = document.createElement("div");
       swimmerElement.classList.add("swimmer");
-      swimmerElement.textContent = `Navn: ${swimmer.name} Email: ${swimmer.email} (${swimmer.time} seconds)`;
+      swimmerElement.textContent = `Navn: ${swimmer.name}, Email: ${swimmer.email}, (${swimmer.time} Sekunder)`;
       disciplineSection.appendChild(swimmerElement);
     });
 
     juniorColumn.appendChild(disciplineSection);
   });
 
-  // Display top swimmers for each discipline in the senior category
+  // Top swimmers for each discipline in the senior category
   Object.entries(topSwimmers.senior).forEach(([discipline, swimmers]) => {
     const disciplineSection = document.createElement("div");
     disciplineSection.classList.add("discipline-section");
 
     const disciplineHeader = document.createElement("h3");
-    disciplineHeader.textContent = discipline.toUpperCase();
+    disciplineHeader.textContent = discipline.toUpperCase() + " Senior";
     disciplineSection.appendChild(disciplineHeader);
 
     swimmers.forEach((swimmer) => {
       const swimmerElement = document.createElement("div");
       swimmerElement.classList.add("swimmer");
-      swimmerElement.textContent = `Navn: ${swimmer.name} Email: ${swimmer.email} (${swimmer.time} seconds)`;
+      swimmerElement.textContent = `Navn: ${swimmer.name}, Email: ${swimmer.email}, (${swimmer.time} Sekunder)`;
       disciplineSection.appendChild(swimmerElement);
     });
 
     seniorColumn.appendChild(disciplineSection);
   });
 
-  // Display swimmers with tournament information
+  // Swimmers with tournament information
   const tournamentHeader = document.createElement("h2");
   tournamentHeader.textContent = "Turneringsresultater";
   tournamentColumn.appendChild(tournamentHeader);
@@ -240,8 +240,8 @@ export function displayTopSwimmers(topSwimmers) {
     tournamentSwimmers.forEach((swimmer) => {
       const swimmerElement = document.createElement("div");
       swimmerElement.classList.add("swimmer");
-      swimmerElement.textContent = `Navn: ${swimmer.name} Email: ${swimmer.email} -Gruppe: ${swimmer.stage}- (${swimmer.time} seconds)`;
-      swimmerElement.textContent += ` ${swimmer.tournament} ${swimmer.placement}`;
+      swimmerElement.textContent = `Navn: ${swimmer.name}, Email: ${swimmer.email}, Gruppe: ${swimmer.stage},  (${swimmer.time} Sekunder)`;
+      swimmerElement.textContent += ` ${swimmer.tournament},  ${swimmer.placement}.`;
       tournamentColumn.appendChild(swimmerElement);
     });
   }

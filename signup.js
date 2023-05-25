@@ -39,14 +39,12 @@ signupForm.addEventListener("submit", (e) => {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
-      // If successful, update the message and clear the form
+      //successful, update the message and clear the form
       signupMessage.innerHTML = `User created with email: ${userCredential.user.email}`;
 
       firebase.auth().onAuthStateChanged(function (user) {
-        console.log("HEY");
-
         if (user) {
-          // User is signed in
+          //user is signed in
           const endpoint =
             "https://javascriptgame-4e4c9-default-rtdb.europe-west1.firebasedatabase.app/users";
           const user = firebase.auth().currentUser;
@@ -106,10 +104,11 @@ signupForm.addEventListener("submit", (e) => {
               if (response.ok) {
                 console.log("User with custom ID created successfully");
               } else {
-                throw new Error("Failed to create user with custom ID");
+                window.alert("Error creating user with custom ID:", error);
               }
             })
             .catch((error) => {
+              window.alert("Error creating user with custom ID:", error);
               console.error("Error creating user with custom ID:", error);
             });
         }
@@ -117,7 +116,7 @@ signupForm.addEventListener("submit", (e) => {
       signupForm.reset();
     })
     .catch((error) => {
-      // If unsuccessful, update the message with the error
+      //errorhandle
       signupMessage.innerHTML = `Error: ${error.message}`;
     });
 });
@@ -127,24 +126,24 @@ function goToMain() {
 }
 
 const FormFee = document.getElementById("FormFee");
-// Add event listener to the form submission
+//event listener to the form submission
 signupForm.addEventListener("change", function (event) {
   event.preventDefault(); // Prevent form submission
 
-  // Get user input values
+  //user input values
   const age = calculateAge(document.getElementById("birthdate").value);
   const active = document.getElementById("subscription").value === "active";
   const ageGroup = getAgeGroup(age);
 
-  // Calculate membership fee
+  //calculate membership fee
   const membershipFee = calculateMembershipFee(age, active, ageGroup);
 
-  // Display the membership fee
+  //the membership fee
   //console.log("Expected Membership Fee:", membershipFee);
   FormFee.innerHTML = ` <br> Prisen for dit abbonoment: ${membershipFee}`;
 });
 
-// Function to calculate age based on birthdate input
+//calculate age based on birthdate input
 function calculateAge(birthdate) {
   const today = new Date();
   const birthdateObj = new Date(birthdate);
@@ -159,7 +158,7 @@ function calculateAge(birthdate) {
   return age;
 }
 
-// Function to determine the age group based on age
+//to determine the age group based on age
 function getAgeGroup(age) {
   if (age < 18) {
     return "junior";
@@ -168,7 +167,7 @@ function getAgeGroup(age) {
   }
 }
 
-// Function to calculate the membership fee
+//to calculate the membership fee
 function calculateMembershipFee(age, active, ageGroup) {
   let membershipFee = 0;
   if (active) {
@@ -177,10 +176,11 @@ function calculateMembershipFee(age, active, ageGroup) {
     } else if (ageGroup === "senior" && age < 60) {
       membershipFee = 1600;
     } else if (ageGroup === "senior" && age >= 60) {
-      membershipFee = 1600 * 0.75; // 25% discount for members over 60
+      membershipFee = 1600 * 0.75; //25% discount for members over 60
     }
   } else {
-    membershipFee = 500; // Passive membership fee
+    //passive membership fee
+    membershipFee = 500;
   }
   return membershipFee;
 }

@@ -180,9 +180,9 @@ async function handleHashChange(uid, name, email, stage, token) {
             }
           );
           const responseData = await response.json();
-          console.log("Membership fee posted successfully:", responseData);
+          window.alert("Resultat er indsendt");
         } catch (error) {
-          console.error("Error posting membership fee:", error);
+          window.alert("Resultat blev ikke indsendt");
         }
       });
     }

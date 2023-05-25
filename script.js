@@ -1,8 +1,8 @@
 "use strict";
-import { calculateMembershipFee } from "/pay.js";
+
 import { getTotalMembershipFee } from "/pay.js";
 import { getAllResults } from "/pay.js";
-import { getUserId } from "/api.js";
+
 import { getByTournament } from "/pay.js";
 import { getTopSwimmersByDiscipline } from "/pay.js";
 import { displayTopSwimmers } from "/pay.js";

@@ -1,4 +1,3 @@
-"use strict";
 import { calculateMembershipFee } from "/pay.js";
 import { getTotalMembershipFee } from "/pay.js";
 import { getAllResults } from "/pay.js";

@@ -524,9 +524,8 @@ firebase.auth().onAuthStateChanged(async function (user) {
     logoutButton.style.display = "none";
     const openButton = document.getElementById("open-dialog-button");
     openButton.style.display = "none";
-
-    demoContainer.style.display = "block";
     const demoContainer = document.createElement("div");
     demoContainer.classList.add("demo-container");
+    demoContainer.style.display = "block";
   }
 });
